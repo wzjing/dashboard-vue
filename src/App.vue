@@ -1,14 +1,32 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+<!--    <div id="nav">-->
+<!--      <router-link to="/">Home</router-link> |-->
+<!--      <router-link to="/about">About</router-link>-->
+<!--    </div>-->
+    <Appbar title="CONSOLE"/>
     <router-view/>
   </div>
 </template>
 
+<script>
+  import Appbar from '@/components/Appbar'
+  export default {
+      components: {Appbar}
+  }
+
+</script>
+
 <style lang="scss">
+
+  html{
+    padding: 0;
+    margin: 0;
+  }
+  body {
+    padding: 0;
+    margin: 0;
+  }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
