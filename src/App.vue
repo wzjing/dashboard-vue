@@ -4,15 +4,15 @@
 <!--      <router-link to="/">Home</router-link> |-->
 <!--      <router-link to="/about">About</router-link>-->
 <!--    </div>-->
-    <Appbar title="CONSOLE"/>
+    <Sidebar title="CONSOLE"/>
     <router-view/>
   </div>
 </template>
 
 <script>
-  import Appbar from '@/components/Appbar'
+  import Sidebar from "./components/Sidebar";
   export default {
-      components: {Appbar}
+      components: {Sidebar}
   }
 
 </script>
@@ -28,11 +28,13 @@
     margin: 0;
   }
 #app {
+  display: flex;
+  flex-direction: row;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #f4f4f4;
 }
 #nav {
   padding: 30px;
