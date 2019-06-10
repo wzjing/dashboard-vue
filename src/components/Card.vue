@@ -24,11 +24,10 @@
 <style scoped lang="scss">
   .card {
     display: inline-block;
-    width: 120px;
-    height: 80px;
+    width: 140px;
+    height: 110px;
     background: #FFFFFF;
-    box-shadow: 0 1px 4px 0 rgba(#000, 0.08);
-    border-radius: 4px;
+    border-radius: 8px;
     box-sizing: border-box;
     cursor: pointer;
 

@@ -1,6 +1,8 @@
 <template>
-  <div class="event-item">
-    <EventItem/>
+  <div class="event-list">
+    <EventItem class="event-list--item" v-bind:selected="true"/>
+    <EventItem class="event-list--item" v-bind:selected="false"/>
+    <EventItem class="event-list--item" v-bind:selected="false"/>
   </div>
 </template>
 
@@ -8,7 +10,7 @@
   import EventItem from '@/components/EventItem.vue'
 
   export default {
-    name: 'EventItem',
+    name: 'EventList',
     props: {
       title: String
     },
@@ -19,5 +21,10 @@
 </script>
 
 <style scoped lang="scss">
+  .event-list {
+  }
 
+  .event-list--item {
+    margin-bottom: 24px;
+  }
 </style>

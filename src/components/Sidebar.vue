@@ -22,6 +22,8 @@
   .sidebar {
     display: inline-block;
     width: 56px;
+    box-sizing: border-box;
+    padding: 16px 0;
     box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.08);
     background: #ffffff;
   }

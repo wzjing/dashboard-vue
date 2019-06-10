@@ -2,7 +2,7 @@
   <div class="home">
     <div id="title">
       <div class="logo-text">DASHBOARD</div>
-      <SVGAvatar class="avatar"/>
+      <SVGAvatar class="avatar" width="32px" height="32px"/>
       <div class="user-name">Guest</div>
     </div>
     <div class="card-group">
@@ -11,7 +11,6 @@
       <Card id="card3" class="card-item"/>
     </div>
     <div class="event-list">
-      list
       <EventList/>
     </div>
   </div>
@@ -33,16 +32,21 @@
 </script>
 
 <style scoped lang="scss">
+
+  .home {
+    box-sizing: border-box;
+    padding: 28px 56px;
+  }
+
   #title {
     display: flex;
     flex-direction: row;
     text-align: left;
-    margin: 24px 0 0 32px;
     align-items: center;
   }
 
   .logo-text {
-    font-size: 24px;
+    font-size: 26px;
     display: inline-block;
     font-family: "Microsoft YaHei UI", sans-serif;
     font-weight: normal;
@@ -60,7 +64,7 @@
   }
 
   .card-group {
-    margin: 24px 0 0 32px;
+    margin: 48px 0 0 0;
   }
 
   .card-item {
@@ -68,6 +72,7 @@
   }
 
   .event-list {
+    margin: 48px 0 0 0;
     height: 150px;
   }
 </style>
