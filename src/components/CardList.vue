@@ -1,6 +1,11 @@
 <template>
-  <div class="card-list">
-    <Card v-for="item in listData" v-bind:key="item.key" v-bind:data="item" v-bind:selected="item.key===listSelection"/>
+  <div class="card-list"
+       @click="updateSelection('sele')">
+    <Card v-for="item in listData"
+          :key="listData.indexOf(item)"
+          v-bind:data="item"
+          v-bind:selected="listData.indexOf(item)===listSelection"
+    />
   </div>
 </template>
 
@@ -15,11 +20,17 @@
     },
     components: {
       Card
+    },
+    methods: {
+      updateSelection: (key)=> {
+        console.log(`key: ${key}`)
+
+      }
     }
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
   .card-list {
     background: transparent;

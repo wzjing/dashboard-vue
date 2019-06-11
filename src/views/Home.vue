@@ -29,17 +29,20 @@
             {
               key: 0,
               title: "退款订单",
-              content: "17个未处理",
+              content: "个未处理",
+              number: "17"
             },
             {
               key: 1,
               title: "取消订单",
-              content: "5个未处理",
+              content: "个未处理",
+              number: "5"
             },
             {
               key: 2,
               title: "装备订单",
-              content: "0个未处理",
+              content: "个未处理",
+              number: "0"
             }
           ]
         }
