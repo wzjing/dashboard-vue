@@ -37,7 +37,7 @@
   #app {
     display: flex;
     flex-direction: row;
-    font-family: "Helvetica Neue", "DIN", Arial, sans-serif;
+    font-family: PingFang,"Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;

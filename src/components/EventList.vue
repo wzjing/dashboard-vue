@@ -21,7 +21,9 @@
 </script>
 
 <style scoped lang="scss">
+
   .event-list {
+    background: transparent;
   }
 
   .event-list--item {

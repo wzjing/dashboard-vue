@@ -1,31 +1,53 @@
 <template>
   <div class="home">
-    <div id="title">
+    <div class="title-layout">
       <div class="logo-text">DASHBOARD</div>
       <SVGAvatar class="avatar" width="32px" height="32px"/>
       <div class="user-name">Guest</div>
     </div>
-    <div class="card-group">
-      <Card id="card1" class="card-item"/>
-      <Card id="card2" class="card-item"/>
-      <Card id="card3" class="card-item"/>
+    <div class="sort-layout">
+      <CardList v-bind:listData="sortListData.data" v-bind:listSelection="sortListData.selection"/>
     </div>
-    <div class="event-list">
+    <div class="event-layout">
       <EventList/>
     </div>
   </div>
 </template>
 
 <script>
-  import Card from '@/components/Card.vue'
+  import CardList from '@/components/CardList.vue'
   import EventList from '@/components/EventList.vue'
   import SVGAvatar from '@/assets/ic_avatar.svg'
 
   export default {
     name: 'home',
+    data: () => {
+      return {
+        sortListData: {
+          selection: 0,
+          data: [
+            {
+              key: 0,
+              title: "退款订单",
+              content: "17个未处理",
+            },
+            {
+              key: 1,
+              title: "取消订单",
+              content: "5个未处理",
+            },
+            {
+              key: 2,
+              title: "装备订单",
+              content: "0个未处理",
+            }
+          ]
+        }
+      }
+    },
     components: {
       SVGAvatar,
-      Card,
+      CardList,
       EventList
     }
   }
@@ -33,12 +55,18 @@
 
 <style scoped lang="scss">
 
+  $left_margin: 56px;
+
   .home {
     box-sizing: border-box;
-    padding: 28px 56px;
+    padding: 28px 0;
+    display: flex;
+    flex-direction: column;
   }
 
-  #title {
+  .title-layout {
+    flex: 0 0 auto;
+    margin-left: $left_margin;
     display: flex;
     flex-direction: row;
     text-align: left;
@@ -63,16 +91,16 @@
     color: #6F6F6F;
   }
 
-  .card-group {
-    margin: 48px 0 0 0;
+  .sort-layout {
+    flex: 0 0 auto;
+    margin: 48px 0 0 $left_margin;
   }
 
-  .card-item {
-    margin: 0 28px 0 0;
-  }
-
-  .event-list {
-    margin: 48px 0 0 0;
+  .event-layout {
+    flex: 1 1 auto;
+    overflow: visible auto;
+    padding: 24px 28px;
+    margin: 48px 0 0 $left_margin/2;
     height: 150px;
   }
 </style>

@@ -29,18 +29,26 @@
 
   .event-item {
     position: relative;
-    height: 128px;
-    box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.08);
+    height: 120px;
     box-sizing: border-box;
     padding: 18px 16px;
     text-align: left;
     background: transparent;
-    border: 2px solid #707070
+    border: 1px solid #707070;
+
+    &:hover {
+      background: rgba(#989898, 0.16);
+    }
   }
 
   .event-item--selected {
-    border: none;
+    box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.08);
+    border: 1px solid transparent;
     background: #FFEBBF;
+
+    &:hover {
+      background: #FFEBBF;
+    }
   }
 
   .event-item--time {
