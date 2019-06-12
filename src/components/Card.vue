@@ -1,7 +1,8 @@
 <template>
-  <div v-bind:class="selected ? 'card selected' : 'card'">
+  <div id="card" v-bind:class="selected ? 'card selected' : 'card'"
+       @click="$emit('item-click', index)">
     <div class="card--icon"></div>
-    <div class="card--title">{{data.title}}</div>
+    <span class="card--title">{{data.title}}</span>
     <div class="card--content">
       <span class="card--number">{{data.number}}</span>{{data.content}}
     </div>
@@ -13,35 +14,19 @@
     name: 'Card',
     props: {
       selected: Boolean,
-      data: Object
+      index: Number,
+      data: Object,
     },
-    methods: {
-      onClick: (event) => {
-        if (event) {
-          let target = event.target
-          while (!target.classList.contains('card')) {
-            if (target.parentElement != null) {
-              target = target.parentElement
-            } else {
-              return;
-            }
-          }
-          if (target.classList.contains('selected')) {
-            target.classList.remove('selected')
-          } else {
-            target.classList.add('selected')
-          }
-        }
-      }
-    }
+    methods: {}
   }
 </script>
 
 <style scoped lang="scss">
   .card {
+    position: relative;
     display: inline-block;
     width: 140px;
-    height: 116px;
+    height: 90px;
     background: #FFFFFF;
     border-radius: 8px;
     border: solid 1px transparent;
@@ -63,22 +48,30 @@
   }
 
   .card--icon {
+    position: relative;
     width: 36px;
     height: 36px;
+    display: inline-block;
     background: #ececec;
+    box-sizing: border-box;
+    vertical-align: bottom;
   }
 
   .card--title {
+    position: relative;
+    height: 36px;
+    line-height: 36px;
     font-size: 12px;
     color: #707070;
-    margin-top: 8px;
+    display: inline-block;
+    margin-left: 10px;
     transform: scale(0.9);
     transform-origin: left;
   }
 
   .card--content {
     font-size: 12px;
-    margin-top: 4px;
+    margin-top: 8px;
   }
 
   .card--number {

@@ -6,10 +6,13 @@
       <div class="user-name">Guest</div>
     </div>
     <div class="sort-layout">
-      <CardList v-bind:listData="sortListData.data" v-bind:listSelection="sortListData.selection"/>
+      <CardList v-bind:listData="sortListData"/>
+    </div>
+    <div class="filter-layout">
+      <ListFilter v-bind:options="filterOptions"/>
     </div>
     <div class="event-layout">
-      <EventList/>
+      <EventList v-bind:listData="eventListData"/>
     </div>
   </div>
 </template>
@@ -17,41 +20,62 @@
 <script>
   import CardList from '@/components/CardList.vue'
   import EventList from '@/components/EventList.vue'
+  import ListFilter from '@/components/ListFilter.vue'
   import SVGAvatar from '@/assets/ic_avatar.svg'
 
   export default {
     name: 'home',
+    components: {
+      CardList,
+      EventList,
+      ListFilter,
+      SVGAvatar
+    },
     data: () => {
       return {
-        sortListData: {
-          selection: 0,
-          data: [
-            {
-              key: 0,
-              title: "退款订单",
-              content: "个未处理",
-              number: "17"
-            },
-            {
-              key: 1,
-              title: "取消订单",
-              content: "个未处理",
-              number: "5"
-            },
-            {
-              key: 2,
-              title: "装备订单",
-              content: "个未处理",
-              number: "0"
-            }
-          ]
-        }
+        sortListData: [
+          {
+            title: "退款订单",
+            content: "个未处理",
+            number: "17"
+          },
+          {
+            title: "取消订单",
+            content: "个未处理",
+            number: "5"
+          },
+          {
+            title: "装备订单",
+            content: "个未处理",
+            number: "0"
+          }
+        ],
+        filterOptions: [
+          "全部订单",
+          "未处理",
+          "已处理"
+        ],
+        eventListData: [
+          {
+            time: new Date(),
+            title: "退款申请",
+            user: "一直低电量的皮卡丘",
+            content: "双方协商退款，退款金额：24元"
+          },
+          {
+            time: new Date(),
+            title: "退款申请",
+            user: "一直低电量的皮卡丘",
+            content: "双方协商退款，退款金额：24元"
+          },
+          {
+            time: new Date(),
+            title: "退款申请",
+            user: "一直低电量的皮卡丘",
+            content: "双方协商退款，退款金额：24元"
+          }
+        ]
       }
-    },
-    components: {
-      SVGAvatar,
-      CardList,
-      EventList
     }
   }
 </script>
@@ -99,11 +123,16 @@
     margin: 48px 0 0 $left_margin;
   }
 
+  .filter-layout {
+    flex: 0 0 auto;
+    margin: 20px 0 0 $left_margin;
+  }
+
   .event-layout {
     flex: 1 1 auto;
     overflow: visible auto;
     padding: 24px 28px;
-    margin: 48px 0 0 $left_margin/2;
+    margin: 0 0 0 $left_margin/2;
     height: 150px;
   }
 </style>

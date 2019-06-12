@@ -1,17 +1,11 @@
 <template>
-  <div class="event-item event-item--selected" v-if="selected">
+  <div v-bind:class="selected ? 'event-item event-item--selected' : 'event-item'"
+  @click="$emit('item-click', index)">
     <div class="event-item-dot"></div>
-    <div class="event-item--time">3分钟前</div>
-    <div class="event-item--title">退款申请</div>
-    <div class="event-item--p1">来自：一直低电量的皮卡丘</div>
-    <div class="event-item--p2">快递员取件超时，退款金额：24元</div>
-  </div>
-  <div class="event-item" v-else>
-    <div class="event-item-dot"></div>
-    <div class="event-item--time">3分钟前</div>
-    <div class="event-item--title">退款申请</div>
-    <div class="event-item--p1">来自：一直低电量的皮卡丘</div>
-    <div class="event-item--p2">快递员取件超时，退款金额：24元</div>
+    <div class="event-item--time">{{`${data.time.getFullYear()}年${data.time.getMonth()}月${data.time.getDay()} ${data.time.getHours()}:${data.time.getMinutes()}`}}</div>
+    <div class="event-item--title">{{data.title}}</div>
+    <div class="event-item--p1">来自：{{data.user}}</div>
+    <div class="event-item--p2">{{data.content}}</div>
   </div>
 </template>
 
@@ -19,7 +13,8 @@
   export default {
     name: 'EventItem',
     props: {
-      title: String,
+      data: Object,
+      index: Number,
       selected: Boolean
     }
   }
@@ -87,5 +82,7 @@
     text-align: left;
     margin: 16px 0 0 14px;
     color: rgba(black, 0.5);
+    transform: scale(0.9);
+    transform-origin: left;
   }
 </style>

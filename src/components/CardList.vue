@@ -1,11 +1,11 @@
 <template>
-  <div class="card-list"
-       @click="updateSelection('sele')">
-    <Card v-for="item in listData"
-          :key="listData.indexOf(item)"
+  <div class="card-list">
+    <Card v-for="(item, index) in listData"
+          :key="index"
           v-bind:data="item"
-          v-bind:selected="listData.indexOf(item)===listSelection"
-    />
+          v-bind:index="index"
+          v-bind:selected="index===currentIndex"
+          @item-click="currentIndex = $event"/>
   </div>
 </template>
 
@@ -16,15 +16,19 @@
     name: "CardList",
     props: {
       listData: Array,
-      listSelection: Number
+    },
+    data: () => {
+      return {
+        currentIndex: 0
+      }
     },
     components: {
       Card
     },
-    methods: {
-      updateSelection: (key)=> {
-        console.log(`key: ${key}`)
-
+    methods: {},
+    watch: {
+      currentIndex: (index) => {
+        console.log(`index: ${index}`)
       }
     }
   }
