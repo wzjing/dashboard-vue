@@ -33,6 +33,7 @@
     },
     data: () => {
       return {
+
         sortListData: [
           {
             title: "退款订单",
@@ -59,20 +60,20 @@
           {
             time: new Date(),
             title: "退款申请",
-            user: "一直低电量的皮卡丘",
+            user: "斯巴克",
             content: "双方协商退款，退款金额：24元"
           },
           {
             time: new Date(),
             title: "退款申请",
-            user: "一直低电量的皮卡丘",
-            content: "双方协商退款，退款金额：24元"
+            user: "契诃夫",
+            content: "订单已退回，退款金额：24元"
           },
           {
             time: new Date(),
             title: "退款申请",
-            user: "一直低电量的皮卡丘",
-            content: "双方协商退款，退款金额：24元"
+            user: "苏鲁",
+            content: "快递员未能送达，退款金额：24元"
           }
         ]
       }

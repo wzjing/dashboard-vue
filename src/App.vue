@@ -4,13 +4,13 @@
     <!--      <router-link to="/">Home</router-link> |-->
     <!--      <router-link to="/about">About</router-link>-->
     <!--    </div>-->
-    <Sidebar id="sidebar" title="CONSOLE"/>
+    <Sidebar id="sidebar"/>
     <router-view/>
   </div>
 </template>
 
 <script>
-  import Sidebar from "./components/Sidebar";
+  import Sidebar from "@/components/Sidebar";
 
   export default {
     components: {Sidebar}
