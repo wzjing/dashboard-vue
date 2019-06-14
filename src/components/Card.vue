@@ -24,52 +24,47 @@
 <style scoped lang="scss">
   .card {
     position: relative;
-    display: inline-block;
-    width: 140px;
-    height: 90px;
-    background: #FFFFFF;
+    display: inline-flex;
+    flex-flow: column;
+    align-items: center;
+    background: transparent;
     border-radius: 8px;
     border: solid 1px transparent;
-    /*font-family: "Helvetica Neue",serif;*/
     box-sizing: border-box;
     cursor: pointer;
-    text-align: left;
+    text-align: center;
     padding: 14px 18px;
-    -webkit-user-select: none;
+    user-select: none;
 
     &:hover {
-      box-shadow: 0 2px 20px 0 rgba(#000, 0.08);
     }
   }
 
   .selected {
-    box-shadow: 0 2px 20px 0 rgba(#000, 0.08);
-    border: solid 1px #acacac;
+    background: #FFFFFF;
   }
 
   .card--icon {
+    flex: 0 0 auto;
     position: relative;
     width: 36px;
     height: 36px;
-    display: inline-block;
     background: #ececec;
     box-sizing: border-box;
-    vertical-align: bottom;
   }
 
   .card--title {
+    flex: 0 0 auto;
     position: relative;
-    height: 36px;
-    line-height: 36px;
+    margin-top: 6px;
     font-size: 12px;
     color: #707070;
-    display: inline-block;
-    margin-left: 10px;
     transform: scale(0.9);
     transform-origin: left;
   }
 
   .card--content {
+    flex: 0 0 auto;
     font-size: 12px;
     margin-top: 8px;
   }

@@ -41,7 +41,7 @@
   }
 
   .card {
-    margin-right: 20px;
+    margin-right: 6px;
   }
 
 </style>

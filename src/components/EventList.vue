@@ -34,9 +34,15 @@
 
   .event-list {
     background: transparent;
+    overflow-y: visible;
+
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
   }
 
   .event-list--item {
-    margin-bottom: 24px;
+    margin-bottom: 1px;
   }
 </style>

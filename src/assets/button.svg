@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" viewBox="0 0 56 24"
+     style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g id="icon" transform="matrix(1,0,0,1,-4,-20)">
+        <g id="color">
+            <g id="main" transform="matrix(1,0,0,0.666667,0,13.3333)">
+                <path d="M56,28C56,21.377 52.415,16 48,16L16,16C11.585,16 8,21.377 8,28C8,34.623 11.585,40 16,40L48,40C52.415,40 56,34.623 56,28Z"
+                      style="fill:rgb(255,58,119);"/>
+            </g>
+            <path id="shadow"
+                  d="M51.954,25.046C54.37,26.423 56,29.023 56,32C56,36.415 52.415,40 48,40L16,40C13.023,40 10.423,38.37 9.046,35.954C10.212,36.62 11.562,37 13,37L45,37C49.415,37 53,33.415 53,29C53,27.562 52.62,26.212 51.954,25.046Z"
+                  style="fill:rgb(255,0,79);"/>
+            <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    begin="icon.mouseenter"
+                    dur="0.2s"
+                    to="-2 -18"
+                    fill="freeze"/>
+            <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    begin="mouseout"
+                    dur="0.2s"
+                    to="-4 -20"
+                    fill="freeze"/>
+        </g>
+        <g id="line">
+            <g id="l5" transform="matrix(1,0,0,0.666667,0,13.3333)">
+                <path d="M19.129,40L20.185,40" style="fill:none;stroke:black;stroke-width:1.18px;"/>
+            </g>
+            <g id="l4" transform="matrix(1,0,0,0.666667,0,13.3333)">
+                <path d="M22.185,40L48,40C52.415,40 56,34.623 56,28C56,21.377 52.415,16 48,16L43,16"
+                      style="fill:none;stroke:black;stroke-width:1.18px;"/>
+            </g>
+            <g id="l3" transform="matrix(1,0,0,0.666667,0,13.3333)">
+                <path d="M41,16L37.521,16" style="fill:none;stroke:black;stroke-width:1.18px;"/>
+            </g>
+            <g id="l2" transform="matrix(1,0,0,0.666667,0,13.3333)">
+                <path d="M35.521,16L34.719,16" style="fill:none;stroke:black;stroke-width:1.18px;"/>
+            </g>
+            <g id="l1" transform="matrix(1,0,0,0.666667,0,13.3333)">
+                <path d="M32.719,16L16,16C11.585,16 8,21.377 8,28C8,34.623 11.585,40 16,40L17.129,40"
+                      style="fill:none;stroke:black;stroke-width:1.18px;"/>
+            </g>
+        </g>
+    </g>
+    <path id="cover" d="M0,0H56V24H0Z" fill="none">
+
+    </path>
+</svg>

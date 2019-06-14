@@ -5,7 +5,7 @@
     <!--      <router-link to="/about">About</router-link>-->
     <!--    </div>-->
     <Sidebar id="sidebar"/>
-    <router-view/>
+    <router-view id="router"/>
   </div>
 </template>
 
@@ -47,7 +47,11 @@
   }
 
   #sidebar {
-    flex: 0 1 auto;
+    flex: 0 0 auto;
+  }
+
+  #router {
+    flex: 1 1 auto;
   }
 
   #nav {

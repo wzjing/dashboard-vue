@@ -5,7 +5,7 @@
         <animateTransform
                 attributeName="transform"
                 type="rotate"
-                begin="shape.mouseover"
+                begin="mouseover"
                 dur="0.2s"
                 from="0 12 12"
                 to="90 12 12"
