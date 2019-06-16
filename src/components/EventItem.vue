@@ -24,7 +24,7 @@
 
 <style scoped lang="scss">
 
-  $color-selected: #fff8d6;
+  $color-selected: #2f69ff;
 
   .event-item {
     position: relative;
@@ -32,11 +32,13 @@
     box-sizing: border-box;
     padding: 16px 24px 16px 18px;
     text-align: left;
-    background: #ffffff;
+    background: white;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
+    color: black;
+    cursor: pointer;
 
     &:hover {
-      background: $color-selected;
+      background-color: #bfd3ff;
     }
 
   }
@@ -45,20 +47,25 @@
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     background: $color-selected;
     z-index: 2;
+    color: white;
+
+    &:hover {
+      background: $color-selected;
+    }
   }
 
   .event-item--time {
     float: right;
     font-size: 12px;
     margin-top: 0;
-    color: rgba(black, 0.5);
+    opacity: 0.7;
     transform-origin: right;
     transform: scale(0.9);
   }
 
   .event-item-dot {
     display: inline-block;
-    background: #FF434A;
+    background: #ff4b43;
     margin: 0 4px;
     width: 5px;
     height: 5px;
@@ -77,7 +84,7 @@
     font-size: 12px;
     text-align: left;
     margin: 8px 0 0 14px;
-    color: rgba(black, 0.5);
+    opacity: 0.7;
     transform: scale(0.9);
     transform-origin: left;
   }

@@ -5,10 +5,22 @@
         <animateTransform
                 attributeName="transform"
                 type="rotate"
-                begin="mouseover"
+                begin="bound.mouseenter"
                 dur="0.2s"
                 from="0 12 12"
                 to="90 12 12"
                 fill="freeze"/>
+        <animateTransform
+                attributeName="transform"
+                type="rotate"
+                begin="bound.mouseout"
+                dur="0.2s"
+                from="90 12 12"
+                to="0 12 12"
+                fill="freeze"/>
     </path>
+    <path id="bound"
+          d="M0,0V24H24V0Z"
+          fill="#ffffff"
+          fill-opacity="0"/>
 </svg>

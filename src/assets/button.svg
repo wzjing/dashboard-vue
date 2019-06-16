@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" viewBox="0 0 56 24"
      style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
     <g id="icon" transform="matrix(1,0,0,1,-4,-20)">
-        <g id="color">
+        <g id="color" transform="translate(1, 1)">
             <g id="main" transform="matrix(1,0,0,0.666667,0,13.3333)">
                 <path d="M56,28C56,21.377 52.415,16 48,16L16,16C11.585,16 8,21.377 8,28C8,34.623 11.585,40 16,40L48,40C52.415,40 56,34.623 56,28Z"
                       style="fill:rgb(255,58,119);"/>
@@ -12,16 +12,16 @@
             <animateTransform
                     attributeName="transform"
                     type="translate"
-                    begin="icon.mouseenter"
+                    begin="event_area.mouseenter"
                     dur="0.2s"
-                    to="-2 -18"
+                    to="0 0"
                     fill="freeze"/>
             <animateTransform
                     attributeName="transform"
                     type="translate"
-                    begin="mouseout"
+                    begin="event_area.mouseout"
                     dur="0.2s"
-                    to="-4 -20"
+                    to="1 1"
                     fill="freeze"/>
         </g>
         <g id="line">
@@ -44,7 +44,5 @@
             </g>
         </g>
     </g>
-    <path id="cover" d="M0,0H56V24H0Z" fill="none">
-
-    </path>
+    <path id="event_area" d="M0,0H56V24H0Z" fill="#ffffff" fill-opacity="0"/>
 </svg>

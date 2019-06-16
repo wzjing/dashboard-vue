@@ -1,31 +1,48 @@
 <template>
   <div class="sidebar">
-    <SVGMenu id="menu-button"/>
-    <div id="sidebar-spacing1"></div>
-    <SVGHolder class="sidebar-menu--icon"/>
-    <SVGHolder class="sidebar-menu--icon"/>
-    <SVGHolder class="sidebar-menu--icon"/>
-    <div id="sidebar-spacing2"></div>
-    <SVGSetting id="setting-button"/>
+    <SVGMenu class="menu-button"/>
+    <div class="sidebar-spacing1"></div>
+    <div v-for="(menu, index) in menus"
+         :key="index"
+         v-bind:class="currentIndex === index? 'sidebar-menu sidebar-menu--selected' : 'sidebar-menu'"
+         @click="currentIndex = index">
+      <component class="sidebar-menu--icon" v-bind:is="menu.icon"></component>
+    </div>
+    <div class="sidebar-spacing2"></div>
+    <SVGSetting class="setting-button"/>
   </div>
 </template>
 
 <script>
   import SVGMenu from '@/assets/ic_menu.svg'
   import SVGSetting from '@/assets/ic_setting.svg'
-  import SVGHolder from '@/assets/ic_holder.svg'
+  import SVGEvent from '@/assets/ic_event.svg'
+  import SVGVideo from '@/assets/ic_video.svg'
 
   export default {
     name: 'Sidebar',
+    props: {
+      menus: Array
+    },
+    data: () => {
+      return {
+        svgPath: require('../assets/ic_cancel.svg'),
+        currentIndex: 0
+      }
+    },
     components: {
       SVGMenu,
       SVGSetting,
-      SVGHolder
+      SVGEvent,
+      SVGVideo
     }
   }
 </script>
 
 <style scoped lang="scss">
+
+  $menu_size: 36px;
+
   .sidebar {
     display: flex;
     flex-direction: column;
@@ -37,27 +54,50 @@
     background: #ffffff;
   }
 
-  #menu-button {
-    flex: 0 0 auto;
+  .menu-button {
+    flex: 0 0 36px;
     justify-content: flex-start;
     cursor: pointer;
     user-select: none;
   }
 
-  #sidebar-spacing1 {
-    flex: 1 1 auto;
+  .sidebar-spacing1 {
+    flex: 1 1 36px;
+  }
+
+  .sidebar-menu {
+    flex: 0 0 32px;
+    width: 100%;
+    cursor: pointer;
+    filter: grayscale(100%);
+
+    &:hover {
+      filter: grayscale(40%);
+    }
+
+  }
+
+  .sidebar-menu--selected {
+    background: #dfdfdf;
+    filter: none;
+
+    &:hover {
+      filter: none;
+    }
   }
 
   .sidebar-menu--icon {
-    flex: 0 0 auto;
+    width: $menu_size;
+    height: $menu_size;
     margin: 6px 0;
+    background: transparent;
   }
 
-  #sidebar-spacing2 {
+  .sidebar-spacing2 {
     flex: 3 1 auto;
   }
 
-  #setting-button {
+  .setting-button {
     flex: 0 0 auto;
     justify-content: flex-end;
     cursor: pointer;

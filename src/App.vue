@@ -4,16 +4,35 @@
     <!--      <router-link to="/">Home</router-link> |-->
     <!--      <router-link to="/about">About</router-link>-->
     <!--    </div>-->
-    <Sidebar id="sidebar"/>
+    <Sidebar id="sidebar" v-bind:menus="menus"/>
     <router-view id="router"/>
   </div>
 </template>
 
 <script>
   import Sidebar from "@/components/Sidebar";
+  import SVGEvent from '@/assets/ic_event.svg'
+  import SVGVideo from '@/assets/ic_video.svg'
 
   export default {
-    components: {Sidebar}
+
+    data: () => {
+      return {
+        menus: [
+          {
+            name: 'event',
+            icon: SVGEvent
+          },
+          {
+            name: 'video',
+            icon: SVGVideo
+          }
+        ]
+      }
+    },
+    components: {
+      Sidebar
+    }
   }
 
 </script>

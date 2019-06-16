@@ -45,18 +45,17 @@
 
         sortListData: [
           {
-            title: "退款订单",
+            title: "退款",
             content: "个未处理",
             number: "17"
           },
           {
-            title: "取消订单",
+            title: "取消",
             content: "个未处理",
             number: "5"
           },
           {
-            title: "装备订单",
-            content: "个未处理",
+            title: "装备",
             number: "0"
           }
         ],
@@ -179,6 +178,6 @@
 
   .detail-layout {
     flex: 1 1 auto;
-    margin-left: 24px;
+    margin: 0 24px;
   }
 </style>

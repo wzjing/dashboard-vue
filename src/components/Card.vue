@@ -4,7 +4,7 @@
     <div class="card--icon"></div>
     <span class="card--title">{{data.title}}</span>
     <div class="card--content">
-      <span class="card--number">{{data.number}}</span>{{data.content}}
+      <span class="card--number">{{data.number}}</span>个待处理
     </div>
   </div>
 </template>
@@ -57,8 +57,8 @@
     flex: 0 0 auto;
     position: relative;
     margin-top: 6px;
-    font-size: 12px;
-    color: #707070;
+    font-size: 16px;
+    color: #000000;
     transform: scale(0.9);
     transform-origin: left;
   }
@@ -67,10 +67,12 @@
     flex: 0 0 auto;
     font-size: 12px;
     margin-top: 8px;
+    color: rgba(#000000, 0.5);
   }
 
   .card--number {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
+    color: #000;
   }
 </style>
