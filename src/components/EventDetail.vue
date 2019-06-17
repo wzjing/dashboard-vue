@@ -8,11 +8,11 @@
     </div>
     <div class="action-layout">
       <div class="action-button" @click="confirm">
-        <SVGButton class="action-button--background"/>
+        <SVGButtonRed class="action-button--background"/>
         <div class="action-button--text">驳回</div>
       </div>
       <div class="action-button" @click="reject">
-        <SVGButton class="action-button--background"/>
+        <SVGButtonBlue class="action-button--background"/>
         <div class="action-button--text">同意</div>
       </div>
     </div>
@@ -21,12 +21,14 @@
 
 <script>
 
-  import SVGButton from '@/assets/button.svg'
+  import SVGButtonRed from '@/assets/button_red.svg'
+  import SVGButtonBlue from '@/assets/button_blue.svg'
 
   export default {
     name: 'EventDetail',
     components: {
-      SVGButton
+      SVGButtonRed,
+      SVGButtonBlue
     },
     methods: {
       confirm: ()=>{
@@ -99,6 +101,7 @@
     width: 84px;
     height: 36px;
     user-select: none;
+    cursor: pointer;
   }
 
   .action-button--background {

@@ -2,19 +2,18 @@
   <div class="sidebar">
     <SVGMenu class="sidebar-button-menu"/>
     <div class="sidebar-spacing1"></div>
-    <div v-for="(menu, index) in menus"
-         :key="index"
-         v-bind:class="currentIndex === index? 'sidebar-menu sidebar-menu--selected' : 'sidebar-menu'"
-         @click="currentIndex = index">
+    <router-link v-for="(menu, index) in menus"
+                 :key="index"
+                 v-bind:class="currentIndex === index? 'sidebar-menu sidebar-menu--selected' : 'sidebar-menu'"
+                 @click.native="currentIndex = index"
+                 v-bind:to="menu.link">
       <component class="sidebar-menu--icon" v-bind:is="menu.icon"></component>
-      <router-link class="sidebar-router-link" v-bind:to="menu.link"></router-link>
-    </div>
+    </router-link>
     <div class="sidebar-spacing2"></div>
     <SVGAvatar class="sidebar-avatar"/>
-    <div class="sidebar-button-setting">
+    <router-link class="sidebar-button-setting" to="/setting" @click.native="currentIndex = -1">
       <SVGSetting/>
-      <router-link class="sidebar-router-link" to="/setting" @click.native="currentIndex = -1"></router-link>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -33,7 +32,7 @@
     data: () => {
       return {
         svgPath: require('../assets/ic_cancel.svg'),
-        currentIndex: 0
+        currentIndex: -1
       }
     },
     components: {
@@ -42,6 +41,8 @@
       SVGEvent,
       SVGVideo,
       SVGAvatar
+    }, mounted() {
+      console.log(`Router: ${this.$route.path}`)
     }
   }
 </script>
