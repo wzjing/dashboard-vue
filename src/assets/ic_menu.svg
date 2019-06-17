@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" width="100%" height="100%" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" width="24px" height="24px" viewBox="0 0 24 24">
     <style>
         .trans {
         fill: #fff;
@@ -14,28 +14,28 @@
     </style>
     <rect id="bg" class="trans" x="0" y="0" width="24" height="24"/>
     <g id="icon">
-        <rect class="main" x="4" y="6" width="16" height="2" rx="1" ry="1">
+        <rect class="main" x="3" y="4.5" width="18" height="3" rx="1" ry="1">
             <animate
                     attributeName="width"
-                    values="16;4;16"
+                    values="18;6;18"
                     dur="0.3s"
                     keyTimes="0;0.6;1"
                     calcMode="linear"
                     begin="bound.mouseenter"/>
         </rect>
-        <rect class="main" x="4" y="11" width="8" height="2" rx="1" ry="1">
+        <rect class="main" x="3" y="10.5" width="10" height="3" rx="1" ry="1">
             <animate
                     attributeName="width"
-                    values="8;16;8"
+                    values="10;20;10"
                     dur="0.3s"
                     keyTimes="0;0.6;1"
                     calcMode="linear"
                     begin="bound.mouseenter"/>
         </rect>
-        <rect class="main" x="4" y="16" width="12" height="2" rx="1" ry="1">
+        <rect class="main" x="3" y="16.5" width="16" height="3" rx="1" ry="1">
             <animate
                     attributeName="width"
-                    values="12;6;12"
+                    values="16;2;16"
                     dur="0.3s"
                     keyTimes="0;0.6;1"
                     calcMode="linear"

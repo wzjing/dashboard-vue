@@ -1,15 +1,20 @@
 <template>
   <div class="sidebar">
-    <SVGMenu class="menu-button"/>
+    <SVGMenu class="sidebar-button-menu"/>
     <div class="sidebar-spacing1"></div>
     <div v-for="(menu, index) in menus"
          :key="index"
          v-bind:class="currentIndex === index? 'sidebar-menu sidebar-menu--selected' : 'sidebar-menu'"
          @click="currentIndex = index">
       <component class="sidebar-menu--icon" v-bind:is="menu.icon"></component>
+      <router-link class="sidebar-router-link" v-bind:to="menu.link"></router-link>
     </div>
     <div class="sidebar-spacing2"></div>
-    <SVGSetting class="setting-button"/>
+    <SVGAvatar class="sidebar-avatar"/>
+    <div class="sidebar-button-setting">
+      <SVGSetting/>
+      <router-link class="sidebar-router-link" to="/setting" @click.native="currentIndex = -1"></router-link>
+    </div>
   </div>
 </template>
 
@@ -18,6 +23,7 @@
   import SVGSetting from '@/assets/ic_setting.svg'
   import SVGEvent from '@/assets/ic_event.svg'
   import SVGVideo from '@/assets/ic_video.svg'
+  import SVGAvatar from '@/assets/ic_avatar.svg'
 
   export default {
     name: 'Sidebar',
@@ -34,7 +40,8 @@
       SVGMenu,
       SVGSetting,
       SVGEvent,
-      SVGVideo
+      SVGVideo,
+      SVGAvatar
     }
   }
 </script>
@@ -54,7 +61,15 @@
     background: #ffffff;
   }
 
-  .menu-button {
+  .sidebar-router-link {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .sidebar-button-menu {
     flex: 0 0 36px;
     justify-content: flex-start;
     cursor: pointer;
@@ -68,6 +83,7 @@
   .sidebar-menu {
     flex: 0 0 32px;
     width: 100%;
+    position: relative;
     cursor: pointer;
     filter: grayscale(100%);
 
@@ -97,9 +113,18 @@
     flex: 3 1 auto;
   }
 
-  .setting-button {
-    flex: 0 0 auto;
+  .sidebar-avatar {
+    flex: 0 0 36px;
+    margin-bottom: 20px;
     justify-content: flex-end;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .sidebar-button-setting {
+    flex: 0 0 36px;
+    justify-content: flex-end;
+    position: relative;
     cursor: pointer;
     user-select: none;
   }

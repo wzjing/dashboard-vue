@@ -49,17 +49,13 @@
   }
 
   .filter--option {
-    flex: 1 0 60px;
+    flex: 1 0 auto;
     display: flex;
     flex-flow: column;
     align-items: center;
     color: #000;
     cursor: pointer;
     user-select: none;
-
-    &:hover {
-      opacity: 1;
-    }
   }
 
   .filter--option-selected {
@@ -68,15 +64,21 @@
 
   .filter--option-text {
     flex: 0 0 auto;
-    font-size: 14px;
-    padding: 4px 6px 4px;
+    font-size: 12px;
+    padding: 4px 8px;
     text-align: center;
+    opacity: 1;
 
-    .filter--option & {
+    .filter--option > & {
       opacity: 0.5;
     }
 
-    .filter--option-selected & {
+    .filter--option:hover > & {
+      opacity: 1;
+    }
+
+
+    .filter--option-selected > & {
       opacity: 1;
     }
   }
@@ -85,7 +87,7 @@
     flex: 0 0 auto;
     height: 4px;
     width: 60%;
-    border-radius: 4px 4px 0 0;
+    border-radius: 2px;
     background: dodgerblue;
 
     .filter--option & {

@@ -1,12 +1,10 @@
 <template>
-  <div class="event-content">
-
-  </div>
+  <div>Setting</div>
 </template>
 
 <script>
   export default {
-    name: "EventContent"
+    name: "Setting"
   }
 </script>
 

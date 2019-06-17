@@ -5,7 +5,9 @@
     <!--      <router-link to="/about">About</router-link>-->
     <!--    </div>-->
     <Sidebar id="sidebar" v-bind:menus="menus"/>
-    <router-view id="router"/>
+    <keep-alive>
+      <router-view id="router"/>
+    </keep-alive>
   </div>
 </template>
 
@@ -21,11 +23,13 @@
         menus: [
           {
             name: 'event',
-            icon: SVGEvent
+            icon: SVGEvent,
+            link: '/event'
           },
           {
             name: 'video',
-            icon: SVGVideo
+            icon: SVGVideo,
+            link: '/video'
           }
         ]
       }
@@ -51,6 +55,7 @@
     margin: 0;
     width: 100%;
     height: 100%;
+    min-width: 1000px;
   }
 
   #app {
