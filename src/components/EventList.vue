@@ -6,10 +6,10 @@
          @click="currentIndex = index;$emit('item-click', index)">
       <div class="event-item--dot"></div>
       <div class="event-item--time">
-        {{`${item.time.getFullYear()}年${item.time.getMonth()}月${item.time.getDay()}${item.time.getHours()}:${item.time.getMinutes()}`}}
+        {{`${item.applyTime.getFullYear()}年${item.applyTime.getMonth()}月${item.applyTime.getDay()} ${item.applyTime.getHours()}:${item.applyTime.getMinutes()}`}}
       </div>
-      <div class="event-item--title">{{item.title}}</div>
-      <div class="event-item--content">{{item.content}}</div>
+      <div class="event-item--title">{{type}}</div>
+      <div class="event-item--content">{{item.reason}}</div>
       <div class="event-item--user">来自：{{item.user}}</div>
     </div>
   </div>
@@ -19,7 +19,8 @@
   export default {
     name: 'EventList',
     props: {
-      listData: Array
+      listData: Array,
+      type: String
     },
     data: () => {
       return {

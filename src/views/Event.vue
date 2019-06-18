@@ -3,13 +3,13 @@
     <div class="content-layout">
       <div class="main-layout">
         <div class="sort-layout">
-          <TypeList v-bind:listData="sortListData" @type-click="typeClick($event)"/>
+          <TypeList v-bind:listData="events" @type-click="typeClick($event)"/>
         </div>
         <div class="filter-layout">
           <ListFilter v-bind:options="filterOptions"/>
         </div>
         <div class="event-layout">
-          <EventList v-bind:listData="eventListData" @item-click="itemClick($event)"/>
+          <EventList v-bind:listData="events[currentIndex].listData" v-bind:type="events[currentIndex].type" @item-click="itemClick($event)"/>
         </div>
       </div>
       <div class="detail-layout">
@@ -27,6 +27,7 @@
   import SVGRefund from '@/assets/ic_refund.svg'
   import SVGCancel from '@/assets/ic_cancel.svg'
   import SVGEquip from '@/assets/ic_equip.svg'
+  import Sources from '@/sampledata/sources.js'
 
   export default {
     name: 'home',
@@ -37,75 +38,73 @@
       EventDetail
     },
     methods: {
-      typeClick: (index) => {
-        console.log(`type: ${index}`)
+      typeClick(index) {
+        this.currentIndex = index
+        switch (index) {
+          case 0:
+            this.events[index].listData = Sources.refundList
+            this.events[index].count = Sources.refundList.length
+            break;
+          case 1:
+            this.events[index].listData = Sources.cancelList
+            this.events[index].count = Sources.cancelList.length
+            break;
+          case 2:
+            this.events[index].listData = Sources.equipList
+            this.events[index].count = Sources.equipList.length
+            break;
+        }
       },
-      itemClick: (index) => {
-        console.log(`index: ${index}`)
+      itemClick(index) {
+        console.log(`item: ${this.sortListData[index].type}`)
       }
     },
-    data: () => {
+    data() {
       return {
-
-        sortListData: [
-          {
-            icon: SVGRefund,
-            type: "退款",
-            count: "17"
-          },
-          {
-            icon: SVGCancel,
-            type: "取消",
-            count: "5"
-          },
-          {
-            icon: SVGEquip,
-            type: "装备",
-            count: "0"
-          }
-        ],
+        currentIndex: 0,
         filterOptions: [
           "全部",
           "未处理"
         ],
-        eventListData: [
+        events: [
           {
-            time: new Date(),
-            title: "退款申请",
-            user: "斯巴克",
-            content: "双方协商退款，退款金额：24元"
+            icon: SVGRefund,
+            type: "退款",
+            listData: null,
+            count: 0
           },
           {
-            time: new Date(),
-            title: "退款申请",
-            user: "契诃夫",
-            content: "订单已退回，退款金额：24元"
+            icon: SVGCancel,
+            type: "取消",
+            listData: null,
+            count: 0
           },
           {
-            time: new Date(),
-            title: "退款申请",
-            user: "苏鲁",
-            content: "快递员未能送达，退款金额：24元"
-          },
-          {
-            time: new Date(),
-            title: "退款申请",
-            user: "苏鲁",
-            content: "快递员未能送达，退款金额：24元"
-          },
-          {
-            time: new Date(),
-            title: "退款申请",
-            user: "苏鲁",
-            content: "快递员未能送达，退款金额：24元"
-          },
-          {
-            time: new Date(),
-            title: "退款申请",
-            user: "苏鲁",
-            content: "快递员未能送达，退款金额：24元"
+            icon: SVGEquip,
+            type: "装备",
+            listData: null,
+            count: 0
           }
         ]
+      }
+    },
+    mounted() {
+      // TODO: get refund list
+      if (this.events[0].listData === null) {
+        this.events[0].listData = Sources.refundList
+        this.events[0].count = Sources.refundList.length
+      }
+
+      // TODO: get cancel list
+      if (this.events[1].listData === null) {
+        this.events[1].listData = Sources.cancelList
+        this.events[1].count = Sources.cancelList.length
+      }
+
+      // TODO: get equip list
+      if (this.events[2].listData === null) {
+        this.events[2].listData = Sources.equipList
+        this.events[2].count = Sources.equipList.length
       }
     }
   }

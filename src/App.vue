@@ -13,6 +13,7 @@
 
 <script>
   import Sidebar from "@/components/Sidebar";
+  import SVGMain from '@/assets/ic_main.svg'
   import SVGEvent from '@/assets/ic_event.svg'
   import SVGVideo from '@/assets/ic_video.svg'
 
@@ -21,6 +22,11 @@
     data: () => {
       return {
         menus: [
+          {
+            name: 'main',
+            icon: SVGMain,
+            link: '/'
+          },
           {
             name: 'event',
             icon: SVGEvent,

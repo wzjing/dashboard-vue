@@ -1,11 +1,10 @@
 <template>
   <div class="sidebar">
-    <SVGMenu class="sidebar-button-menu"/>
+    <SVGMenu class="sidebar-button-menu" @click="menuClick()"/>
     <div class="sidebar-spacing1"></div>
     <router-link v-for="(menu, index) in menus"
                  :key="index"
-                 v-bind:class="currentIndex === index? 'sidebar-menu sidebar-menu--selected' : 'sidebar-menu'"
-                 @click.native="currentIndex = index"
+                 v-bind:class="$route.path === menu.link? 'sidebar-menu sidebar-menu--selected' : 'sidebar-menu'"
                  v-bind:to="menu.link">
       <component class="sidebar-menu--icon" v-bind:is="menu.icon"></component>
     </router-link>
@@ -29,10 +28,15 @@
     props: {
       menus: Array
     },
-    data: () => {
+    methods: {
+      menuClick() {
+        console.log('menu click')
+      }
+    },
+    data() {
       return {
-        svgPath: require('../assets/ic_cancel.svg'),
-        currentIndex: -1
+        svgPath: '../assets/ic_cancel.svg',
+        currentIndex: 0
       }
     },
     components: {
@@ -41,15 +45,13 @@
       SVGEvent,
       SVGVideo,
       SVGAvatar
-    }, mounted() {
-      console.log(`Router: ${this.$route.path}`)
     }
   }
 </script>
 
 <style scoped lang="scss">
 
-  $menu_size: 36px;
+  $menu_size: 30px;
 
   .sidebar {
     display: flex;
@@ -71,18 +73,18 @@
   }
 
   .sidebar-button-menu {
-    flex: 0 0 36px;
+    flex: 0 0 $menu_size;
     justify-content: flex-start;
     cursor: pointer;
     user-select: none;
   }
 
   .sidebar-spacing1 {
-    flex: 1 1 36px;
+    flex: 1 1 $menu_size;
   }
 
   .sidebar-menu {
-    flex: 0 0 32px;
+    flex: 0 0 $menu_size;
     width: 100%;
     position: relative;
     cursor: pointer;
@@ -115,7 +117,7 @@
   }
 
   .sidebar-avatar {
-    flex: 0 0 36px;
+    flex: 0 0 $menu_size;
     margin-bottom: 20px;
     justify-content: flex-end;
     cursor: pointer;
@@ -123,7 +125,8 @@
   }
 
   .sidebar-button-setting {
-    flex: 0 0 36px;
+    flex: 0 0 $menu_size;
+    width: $menu_size;
     justify-content: flex-end;
     position: relative;
     cursor: pointer;

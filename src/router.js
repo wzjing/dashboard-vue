@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HomePage from './views/Home.vue'
-import EventPage from './views/Event.vue'
-import VideoPage from './views/Video.vue'
+import MainPage from './views/Main.vue'
 
 Vue.use(Router)
 
@@ -12,17 +10,17 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomePage
+      name: 'main',
+      component: MainPage
     },
     {
       path: '/event',
       name: 'event',
-      component: EventPage
+      component: () => import(/* webpackChunkName: "event" */ './views/Event.vue')
     },
     {
       path: '/video',
-      component: VideoPage
+      component: () => import(/* webpackChunkName: "video" */ './views/Video.vue')
     },
     {
       path: '/setting',
@@ -30,7 +28,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Setting.vue')
+      component: () => import(/* webpackChunkName: "setting" */ './views/Setting.vue')
     }
   ]
 })
