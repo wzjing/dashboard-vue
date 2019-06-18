@@ -1,6 +1,8 @@
 <template>
   <div class="sidebar">
-    <SVGMenu class="sidebar-button-menu" @click="menuClick()"/>
+    <div class="sidebar-button-menu">
+      <SVGMenu class="sidebar-menu--icon" @click="menuClick()"/>
+    </div>
     <div class="sidebar-spacing1"></div>
     <router-link v-for="(menu, index) in menus"
                  :key="index"
@@ -9,9 +11,11 @@
       <component class="sidebar-menu--icon" v-bind:is="menu.icon"></component>
     </router-link>
     <div class="sidebar-spacing2"></div>
-    <SVGAvatar class="sidebar-avatar"/>
+    <div class="sidebar-button-avatar">
+      <SVGAvatar class="sidebar-menu--icon"/>
+    </div>
     <router-link class="sidebar-button-setting" to="/setting" @click.native="currentIndex = -1">
-      <SVGSetting/>
+      <SVGSetting class="sidebar-menu--icon"/>
     </router-link>
   </div>
 </template>
@@ -54,6 +58,7 @@
   $menu_size: 30px;
 
   .sidebar {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -62,21 +67,14 @@
     padding: 16px 0;
     box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.08);
     background: #ffffff;
-  }
-
-  .sidebar-router-link {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    user-select: none;
   }
 
   .sidebar-button-menu {
     flex: 0 0 $menu_size;
+    width: 100%;
     justify-content: flex-start;
     cursor: pointer;
-    user-select: none;
   }
 
   .sidebar-spacing1 {
@@ -116,8 +114,9 @@
     flex: 3 1 auto;
   }
 
-  .sidebar-avatar {
+  .sidebar-button-avatar {
     flex: 0 0 $menu_size;
+    width: 100%;
     margin-bottom: 20px;
     justify-content: flex-end;
     cursor: pointer;
@@ -126,7 +125,7 @@
 
   .sidebar-button-setting {
     flex: 0 0 $menu_size;
-    width: $menu_size;
+    width: 100%;
     justify-content: flex-end;
     position: relative;
     cursor: pointer;

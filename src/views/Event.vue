@@ -56,7 +56,7 @@
         }
       },
       itemClick(index) {
-        console.log(`item: ${this.sortListData[index].type}`)
+        console.log(`item: ${this.events[this.currentIndex].listData[index].user}`)
       }
     },
     data() {
