@@ -6,10 +6,11 @@
          @click="currentIndex = index;$emit('item-click', index)">
       <div class="event-item--dot"></div>
       <div class="event-item--time">
-        {{`${item.applyTime.getFullYear()}年${item.applyTime.getMonth()}月${item.applyTime.getDay()} ${item.applyTime.getHours()}:${item.applyTime.getMinutes()}`}}
+        {{`${item.applyTime.getFullYear()}年${item.applyTime.getMonth()}月${item.applyTime.getDay()}
+        ${item.applyTime.getHours()}:${item.applyTime.getMinutes()}`}}
       </div>
       <div class="event-item--title">{{type}}</div>
-      <div class="event-item--content">{{item.reason}}</div>
+      <div class="event-item--content">{{item.reason == null ? "无" : item.reason}}</div>
       <div class="event-item--user">来自：{{item.user}}</div>
     </div>
   </div>
@@ -26,6 +27,9 @@
       return {
         currentIndex: 0
       }
+    },
+    mounted() {
+      console.log(`EventList: ${this.currentIndex}`)
     }
   }
 </script>

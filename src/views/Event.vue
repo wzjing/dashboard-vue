@@ -2,18 +2,30 @@
   <div class="home">
     <div class="content-layout">
       <div class="main-layout">
-        <div class="sort-layout">
-          <TypeList v-bind:listData="events" @type-click="typeClick($event)"/>
+        <div class="type-layout">
+          <TypeList :listData="events" @type-click="typeClick($event)"/>
         </div>
         <div class="filter-layout">
-          <ListFilter v-bind:options="filterOptions"/>
+          <SearchView/>
         </div>
         <div class="event-layout">
-          <EventList v-bind:listData="events[currentIndex].listData" v-bind:type="events[currentIndex].type" @item-click="itemClick($event)"/>
+          <keep-alive>
+            <component :is="events[typeIndex].listView"
+                       :listData="events[typeIndex].listData"
+                       :type="events[typeIndex].type"
+                       @item-click="itemClick($event)"></component>
+          </keep-alive>
         </div>
       </div>
-      <div class="detail-layout">
-        <EventDetail/>
+      <div class="detail-layout" v-if="events[typeIndex].listData[listIndex]">
+        <EventDetail :title="events[typeIndex].type"
+                     :eventData="events[typeIndex].listData ? events[typeIndex].listData[listIndex] : null">
+          <template>
+            <div>
+              {{events[typeIndex].listData[listIndex].user}}
+            </div>
+          </template>
+        </EventDetail>
       </div>
     </div>
   </div>
@@ -21,8 +33,7 @@
 
 <script>
   import TypeList from '@/components/TypeList.vue'
-  import EventList from '@/components/EventList.vue'
-  import ListFilter from '@/components/ListFilter.vue'
+  import SearchView from '@/components/SearchView.vue'
   import EventDetail from '@/components/EventDetail.vue'
   import SVGRefund from '@/assets/ic_refund.svg'
   import SVGCancel from '@/assets/ic_cancel.svg'
@@ -33,13 +44,12 @@
     name: 'home',
     components: {
       TypeList,
-      EventList,
-      ListFilter,
+      SearchView,
       EventDetail
     },
     methods: {
       typeClick(index) {
-        this.currentIndex = index
+        this.typeIndex = index
         switch (index) {
           case 0:
             this.events[index].listData = Sources.refundList
@@ -56,12 +66,13 @@
         }
       },
       itemClick(index) {
-        console.log(`item: ${this.events[this.currentIndex].listData[index].user}`)
+        this.listIndex = index
       }
     },
     data() {
       return {
-        currentIndex: 0,
+        typeIndex: 0,
+        listIndex: 0,
         filterOptions: [
           "全部",
           "未处理"
@@ -70,42 +81,40 @@
           {
             icon: SVGRefund,
             type: "退款",
-            listData: null,
-            count: 0
+            listData: [],
+            count: 0,
+            listView: () => import('@/components/EventList.vue')
           },
           {
             icon: SVGCancel,
             type: "取消",
-            listData: null,
-            count: 0
+            listData: [],
+            count: 0,
+            listView: () => import('@/components/EventList.vue')
           },
           {
             icon: SVGEquip,
             type: "装备",
-            listData: null,
-            count: 0
+            listData: [],
+            count: 0,
+            listView: () => import('@/components/EventList.vue')
           }
         ]
       }
     },
     mounted() {
+      console.log('initial data')
       // TODO: get refund list
-      if (this.events[0].listData === null) {
-        this.events[0].listData = Sources.refundList
-        this.events[0].count = Sources.refundList.length
-      }
+      this.events[0].listData = Sources.refundList
+      this.events[0].count = Sources.refundList.length
 
       // TODO: get cancel list
-      if (this.events[1].listData === null) {
-        this.events[1].listData = Sources.cancelList
-        this.events[1].count = Sources.cancelList.length
-      }
+      this.events[1].listData = Sources.cancelList
+      this.events[1].count = Sources.cancelList.length
 
       // TODO: get equip list
-      if (this.events[2].listData === null) {
-        this.events[2].listData = Sources.equipList
-        this.events[2].count = Sources.equipList.length
-      }
+      this.events[2].listData = Sources.equipList
+      this.events[2].count = Sources.equipList.length
     }
   }
 </script>
@@ -161,7 +170,7 @@
     flex-direction: column;
   }
 
-  .sort-layout {
+  .type-layout {
     flex: 0 0 auto;
     margin: 0 $shadow_margin 0 $shadow_margin;
   }

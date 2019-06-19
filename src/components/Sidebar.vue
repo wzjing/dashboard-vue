@@ -14,7 +14,7 @@
     <div class="sidebar-button-avatar">
       <SVGAvatar class="sidebar-menu--icon"/>
     </div>
-    <router-link class="sidebar-button-setting" to="/setting" @click.native="currentIndex = -1">
+    <router-link class="sidebar-button-setting" to="/setting" @click.native="typeIndex = -1">
       <SVGSetting class="sidebar-menu--icon"/>
     </router-link>
   </div>
@@ -40,7 +40,7 @@
     data() {
       return {
         svgPath: '../assets/ic_cancel.svg',
-        currentIndex: 0
+        typeIndex: 0
       }
     },
     components: {

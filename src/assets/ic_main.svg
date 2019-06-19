@@ -15,7 +15,7 @@
                 <path d="M14.995,6.803L10.696,11.249L8.995,17.195L13.294,12.749L14.995,6.803Z" style="fill:white;"/>
                 <path d="M14.995,6.803L10.696,11.249L8.995,17.195L13.294,12.749L14.995,6.803Z"
                       style="fill:none;stroke:black;stroke-width:0.42px;"/>
-                <circle cx="12" cy="12" r="0.7" style="fill:rgb(47,105,255);stroke:black;stroke-width:0.42px;"/>
+                <circle cx="12" cy="12" r="0.6" style="fill:rgb(47,105,255);stroke:black;stroke-width:0.2px;"/>
             </g>
         </g>
     </g>

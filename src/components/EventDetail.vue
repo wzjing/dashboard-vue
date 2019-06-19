@@ -1,20 +1,15 @@
 <template>
   <div class="event-detail">
     <div class="content-layout">
-      <div class="content-time">2019年7月1日</div>
-      <div class="content-title">退款申请</div>
-      <div class="content-from">来自：契诃夫</div>
+      <div class="content-time">{{formatTime(eventData.applyTime)}}</div>
+      <div class="content-title">{{title}}</div>
+      <div class="content-from">来自：{{eventData.user}}</div>
       <div class="content-line"></div>
+      <slot name="content" :order="eventData"></slot>
     </div>
     <div class="action-layout">
-      <div class="action-button" @click="confirm">
-        <SVGButtonRed class="action-button--background"/>
-        <div class="action-button--text">驳回</div>
-      </div>
-      <div class="action-button" @click="reject">
-        <SVGButtonBlue class="action-button--background"/>
-        <div class="action-button--text">同意</div>
-      </div>
+      <Button class="action-button" :background="SVGButtonRed">驳回</Button>
+      <Button class="action-button" :background="SVGButtonBlue">同意</Button>
     </div>
   </div>
 </template>
@@ -23,18 +18,30 @@
 
   import SVGButtonRed from '@/assets/button_red.svg'
   import SVGButtonBlue from '@/assets/button_blue.svg'
+  import Button from '@/components/Button.vue'
+  import {formatTime} from "@/util/timeformat";
 
   export default {
     name: 'EventDetail',
     components: {
-      SVGButtonRed,
-      SVGButtonBlue
+      Button
+    },
+    data() {
+      return {
+        SVGButtonBlue,
+        SVGButtonRed
+      }
+    },
+    props: {
+      title: String,
+      eventData: Object
     },
     methods: {
-      confirm: ()=>{
+      formatTime,
+      confirm: () => {
         console.log('confirm')
       },
-      reject: ()=>{
+      reject: () => {
         console.log('reject')
       }
     }
@@ -81,7 +88,7 @@
 
   .content-line {
     background: #bfbfbf;
-    height:1px;
+    height: 1px;
     margin-top: 18px;
   }
 
@@ -91,36 +98,13 @@
     flex-direction: row;
     justify-content: flex-end;
     text-align: right;
-    padding: 30px;
+    padding: 12px 32px;
     box-sizing: border-box;
   }
 
   .action-button {
     flex: 0 0 auto;
-    position: relative;
     width: 84px;
     height: 36px;
-    user-select: none;
-    cursor: pointer;
-  }
-
-  .action-button--background {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    margin: auto;
-  }
-
-  .action-button--text {
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    line-height: 36px;
-    font-size: 12px;
-    color: #ffffff;
-    pointer-events: none;
   }
 </style>
