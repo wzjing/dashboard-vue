@@ -10,7 +10,9 @@
 <script>
   import Sidebar from "@/components/Sidebar";
   import SVGMain from '@/assets/ic_main.svg'
-  import SVGEvent from '@/assets/ic_event.svg'
+  import SVGRefund from '@/assets/ic_refund.svg'
+  import SVGCancel from '@/assets/ic_cancel.svg'
+  import SVGEquip from '@/assets/ic_equip.svg'
   import SVGVideo from '@/assets/ic_video.svg'
 
   export default {
@@ -24,9 +26,19 @@
             link: '/'
           },
           {
-            name: 'event',
-            icon: SVGEvent,
-            link: '/event'
+            name: 'refund',
+            icon: SVGRefund,
+            link: '/refund'
+          },
+          {
+            name: 'cancel',
+            icon: SVGCancel,
+            link: '/cancel'
+          },
+          {
+            name: 'equip',
+            icon: SVGEquip,
+            link: '/equip'
           },
           {
             name: 'video',

@@ -1,11 +1,13 @@
 <template>
-  <div class="event-detail">
+  <div class="content-detail">
     <div class="content-layout">
-      <div class="content-time">{{formatTime(eventData.applyTime)}}</div>
+      <div class="content-time">{{formatDate(detailData.applyTime)}}</div>
       <div class="content-title">{{title}}</div>
-      <div class="content-from">来自：{{eventData.user}}</div>
+      <div class="content-from">来自：{{detailData.user}}</div>
       <div class="content-line"></div>
-      <slot name="content" :order="eventData"></slot>
+      <div class="content-main">
+        <slot :detailData="detailData"></slot>
+      </div>
     </div>
     <div class="action-layout">
       <Button class="action-button" :background="SVGButtonRed">驳回</Button>
@@ -19,10 +21,10 @@
   import SVGButtonRed from '@/assets/button_red.svg'
   import SVGButtonBlue from '@/assets/button_blue.svg'
   import Button from '@/components/Button.vue'
-  import {formatTime} from "@/util/timeformat";
+  import TimeFormat from "@/util/time-format";
 
   export default {
-    name: 'EventDetail',
+    name: 'ContentDetail',
     components: {
       Button
     },
@@ -34,10 +36,10 @@
     },
     props: {
       title: String,
-      eventData: Object
+      detailData: Object
     },
     methods: {
-      formatTime,
+      formatDate: TimeFormat.formatDate,
       confirm: () => {
         console.log('confirm')
       },
@@ -51,7 +53,7 @@
 
 <style scoped lang="scss">
 
-  .event-detail {
+  .content-detail {
     width: 100%;
     height: 100%;
     display: flex;
@@ -62,7 +64,7 @@
     flex: 1 1 auto;
     border-radius: 4px;
     background: #FFFFFF;
-    box-shadow: 0 4px 8px 0 rgba(black, 0.16);
+    box-shadow: 0 1px 40px 0 rgba(black, 0.08);
     box-sizing: border-box;
     padding: 36px 48px;
   }
@@ -90,6 +92,10 @@
     background: #bfbfbf;
     height: 1px;
     margin-top: 18px;
+  }
+
+  .content-main {
+    margin-top: 16px;
   }
 
   .action-layout {

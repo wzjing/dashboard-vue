@@ -14,20 +14,27 @@ export default new Router({
       component: MainPage
     },
     {
-      path: '/event',
-      name: 'event',
-      component: () => import(/* webpackChunkName: "event" */ './views/Event.vue')
+      path: '/refund',
+      name: 'refund',
+      component: () => import(/* webpackChunkName: "refund" */ './views/RefundList.vue')
+    },
+    {
+      path: '/cancel',
+      name: 'cancel',
+      component: () => import(/* webpackChunkName: "cancel" */ './views/CancelList.vue')
+    },
+    {
+      path: '/equip',
+      name: 'equip',
+      component: () => import(/* webpackChunkName: "equip" */ './views/EquipList.vue')
     },
     {
       path: '/video',
-      component: () => import(/* webpackChunkName: "video" */ './views/Video.vue')
+      component: () => import(/* webpackChunkName: "video" */ './views/VideoList.vue')
     },
     {
       path: '/setting',
       name: 'setting',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "setting" */ './views/Setting.vue')
     }
   ]

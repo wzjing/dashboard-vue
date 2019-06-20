@@ -1,24 +1,28 @@
 <template>
-  <div class="event-list">
+  <div class="vertical-list">
     <div v-for="(item, index) in listData"
          :key="index"
          v-bind:class="currentIndex === index ? 'event-item event-item--selected' : 'event-item'"
-         @click="currentIndex = index;$emit('item-click', index)">
+         @click="itemClick(index)">
       <div class="event-item--dot"></div>
       <div class="event-item--time">
-        {{`${item.applyTime.getFullYear()}年${item.applyTime.getMonth()}月${item.applyTime.getDay()}
-        ${item.applyTime.getHours()}:${item.applyTime.getMinutes()}`}}
+        {{formatDate(item.applyTime)}}
       </div>
-      <div class="event-item--title">{{type}}</div>
-      <div class="event-item--content">{{item.reason == null ? "无" : item.reason}}</div>
+      <div class="event-item--title">
+        <slot name="title" :data="item">{{index}}</slot>
+      </div>
+      <div class="event-item--content">
+        <slot :data="item"> </slot>
+      </div>
       <div class="event-item--user">来自：{{item.user}}</div>
     </div>
   </div>
 </template>
 
 <script>
+  import TimeFormat from "@/util/time-format";
   export default {
-    name: 'EventList',
+    name: 'VerticalList',
     props: {
       listData: Array,
       type: String
@@ -28,23 +32,26 @@
         currentIndex: 0
       }
     },
-    mounted() {
-      console.log(`EventList: ${this.currentIndex}`)
+    methods:{
+      formatDate: TimeFormat.formatDate,
+      itemClick(index){
+        this.currentIndex = index
+        this.$emit('item-click', index)
+      }
     }
   }
 </script>
 
 <style scoped lang="scss">
 
-  .event-list {
+  .vertical-list {
     background: transparent;
     overflow-y: visible;
-
   }
 
-  ::-webkit-scrollbar {
-    width: 4px;
-  }
+  /*::-webkit-scrollbar {*/
+  /*  width: 10px;*/
+  /*}*/
 
   $color-selected: #2f69ff;
 

@@ -55,16 +55,16 @@
 
 <style scoped lang="scss">
 
-  $menu_size: 30px;
+  $menu_size: 28px;
 
   .sidebar {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 56px;
+    width: 48px;
     box-sizing: border-box;
-    padding: 16px 0;
+    padding: 6px 0;
     box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.08);
     background: #ffffff;
     user-select: none;
@@ -78,18 +78,19 @@
   }
 
   .sidebar-spacing1 {
-    flex: 1 1 $menu_size;
+    flex: 0 1 10px;
   }
 
   .sidebar-menu {
-    flex: 0 0 $menu_size;
+    flex: 0 0 auto;
     width: 100%;
     position: relative;
     cursor: pointer;
     filter: grayscale(100%);
+    background: #ffffff;
 
     &:hover {
-      filter: grayscale(40%);
+      background: #dfdfdf;
     }
 
   }
@@ -99,14 +100,15 @@
     filter: none;
 
     &:hover {
-      filter: none;
+      background: #dfdfdf;
     }
   }
 
   .sidebar-menu--icon {
     width: $menu_size;
     height: $menu_size;
-    margin: 6px 0;
+    padding: 4px;
+    box-sizing: content-box;
     background: transparent;
   }
 
