@@ -21,7 +21,7 @@
   import SVGButtonRed from '@/assets/button_red.svg'
   import SVGButtonBlue from '@/assets/button_blue.svg'
   import Button from '@/components/Button.vue'
-  import TimeFormat from "@/util/time-format";
+  import TimeUtil from "@/util/timeutil";
 
   export default {
     name: 'ContentDetail',
@@ -39,7 +39,7 @@
       detailData: Object
     },
     methods: {
-      formatDate: TimeFormat.formatDate,
+      formatDate: TimeUtil.formatDate,
       confirm: () => {
         console.log('confirm')
       },

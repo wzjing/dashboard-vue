@@ -7,22 +7,33 @@
               :listData="listData"
               @item-click="itemClick($event)">
         <template v-slot:title="slotProps">
-          取消订单
+          <span v-if="slotProps.data.type===0">
+            装备退回
+          </span>
+          <span v-else-if="slotProps.data.type===1">
+            装备申请
+          </span>
         </template>
         <template v-slot:default="slotProps">
-          {{slotProps.data.reason == null ? "无" : slotProps.data.reason}}
+          <span v-if="slotProps.data.type === 0">
+            原因：{{withDefault(slotProps.data.returnReason, "无")}}
+          </span>
+          <span v-else-if="slotProps.data.type === 1">
+            申请获取快递装备
+          </span>
         </template>
       </VerticalList>
     </div>
     <div class="detail-layout" v-if="listData[listIndex]">
-      <ContentDetail :title="'退款订单'"
+      <ContentDetail :title="title"
                      :detailData="listData[listIndex] ? listData[listIndex] : null">
         <template v-slot:default="slotProps">
-          <div class="content-text">
-            退款原因：{{slotProps.detailData.reason}}
+          <div v-if="slotProps.detailData.type === 0">
+            <div class="content-text">退回原因：{{slotProps.detailData.returnReason}}</div>
+            <div class="content-text">申请时间：{{formatDate(slotProps.detailData.applyTime)}}</div>
           </div>
-          <div class="content-text">
-            退款金额：<span class="content-amount">{{slotProps.detailData.amount}}</span>元
+          <div v-else-if="slotProps.detailData.type === 1">
+            <div class="content-text">申请时间：{{formatDate(slotProps.detailData.applyTime)}}</div>
           </div>
         </template>
       </ContentDetail>
@@ -34,6 +45,7 @@
   import SearchView from '@/components/SearchView.vue'
   import ContentDetail from '@/components/ContentDetail.vue'
   import VerticalList from '@/components/VerticalList.vue'
+  import TimeUtil from '@/util/timeutil'
   import Sources from '@/sampledata/sources.js'
 
   export default {
@@ -43,15 +55,25 @@
       ContentDetail,
       VerticalList
     },
-    methods: {
-      itemClick(index) {
-        this.listIndex = index
-      }
-    },
     data() {
       return {
         listIndex: 0,
         listData: []
+      }
+    },
+    methods: {
+      formatDate: TimeUtil.formatDate,
+      itemClick(index) {
+        this.listIndex = index
+      },
+      withDefault(value, defaultValue) {
+        return value ? value : defaultValue
+      }
+    },
+    computed: {
+      title() {
+        let item = this.listData[this.listIndex]
+        return item.type == 0 ? "装备退回" : "装备申请"
       }
     },
     mounted() {

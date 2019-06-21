@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import TimeFormat from "@/util/time-format";
+  import TimeUtil from "@/util/timeutil";
   export default {
     name: 'VerticalList',
     props: {
@@ -33,7 +33,7 @@
       }
     },
     methods:{
-      formatDate: TimeFormat.formatDate,
+      formatDate: TimeUtil.formatDate,
       itemClick(index){
         this.currentIndex = index
         this.$emit('item-click', index)

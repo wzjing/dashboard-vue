@@ -16,14 +16,15 @@
     </div>
     <div class="detail-layout" v-if="listData[listIndex]">
       <ContentDetail :title="'退款订单'"
-                     :detailData="listData[listIndex] ? listData[listIndex] : null">
+                     :detailData="listData[listIndex]">
         <template v-slot:default="slotProps">
           <div class="content-text">
-            退款原因：{{slotProps.detailData.reason}}
+            取消原因：{{slotProps.detailData.reason}}
           </div>
           <div class="content-text">
-            退款金额：<span class="content-amount">{{slotProps.detailData.amount}}</span>元
+            订单金额：<span class="content-amount">{{slotProps.detailData.amount}}</span>元
           </div>
+          <div class="content-text">申请时间：{{formatDate(slotProps.detailData.applyTime)}}</div>
         </template>
       </ContentDetail>
     </div>
@@ -35,6 +36,7 @@
   import ContentDetail from '@/components/ContentDetail.vue'
   import VerticalList from '@/components/VerticalList.vue'
   import Sources from '@/sampledata/sources.js'
+  import TimeUtil from '@/util/timeutil'
 
   export default {
     name: 'CancelList',
@@ -44,6 +46,7 @@
       VerticalList
     },
     methods: {
+      formatDate: TimeUtil.formatDate,
       itemClick(index) {
         this.listIndex = index
       }

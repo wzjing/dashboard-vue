@@ -34,6 +34,9 @@
     left: 0;
     top: 0;
     margin: auto;
+    &:hover {
+      background: #b9b9b9;
+    }
   }
 
   .button--text {
