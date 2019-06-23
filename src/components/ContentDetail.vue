@@ -2,7 +2,7 @@
   <div class="content-detail">
     <div class="content-layout">
       <div class="content-time">{{formatDate(detailData.applyTime)}}</div>
-      <div class="content-title">{{title}}</div>
+      <div class="content-title">{{title}} - <span class="content-id">{{detailData.id}}</span></div>
       <div class="content-from">来自：{{detailData.user}}</div>
       <div class="content-line"></div>
       <div class="content-main">
@@ -79,6 +79,10 @@
   .content-title {
     font-size: 16px;
     text-align: left;
+  }
+
+  .content-id {
+    color: rgba(38, 38, 38, 0.99);
   }
 
   .content-from {

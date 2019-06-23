@@ -44,9 +44,13 @@ export default {
   line-height: 20px;
   outline: none;
 
-  &:focus textarea::-webkit-input-placeholder {
-    color: #2f69ff !important;
-    opacity: 0.4;
+}
+
+textarea::-webkit-input-placeholder {
+  color: #2f69ff !important;
+  opacity: 0.4;
+  &:focus {
+    color: #000 !important;
   }
 }
 

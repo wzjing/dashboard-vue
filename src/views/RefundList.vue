@@ -10,14 +10,14 @@
       </VerticalList>
     </div>
     <div class="detail-layout" v-if="listData[listIndex]">
-      <ContentDetail :title="`退款订单 [${listData[listIndex].id}]`" :detailData="listData[listIndex] ? listData[listIndex] : null">
+      <ContentDetail :title="'退款订单'" :detailData="listData[listIndex] ? listData[listIndex] : null">
         <template v-slot:default="slotProps">
+          <div class="content-text">订单号：{{slotProps.detailData.code}}</div>
           <div class="content-text">退款原因：{{slotProps.detailData.reason}}</div>
           <div class="content-text">
             退款金额：
             <span class="content-amount">{{slotProps.detailData.amount}}</span>元
           </div>
-          <div class="content-text">订单号：{{slotProps.detailData.code}}</div>
           <div class="content-text">申请时间：{{formatDate(slotProps.detailData.applyTime)}}</div>
           <div v-if="slotProps.detailData.status === 1">
             <div class="content-text content-state">
