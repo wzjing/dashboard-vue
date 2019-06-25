@@ -16,7 +16,7 @@
         </template>
         <template v-slot:default="slotProps">
           <span v-if="slotProps.data.type === 0">
-            原因：{{withDefault(slotProps.data.returnReason, "无")}}
+            原因：{{slotProps.data.returnReason || "无"}}
           </span>
           <span v-else-if="slotProps.data.type === 1">
             申请获取快递装备
@@ -36,6 +36,9 @@
             <div class="content-text">申请时间：{{formatDate(slotProps.detailData.applyTime)}}</div>
           </div>
         </template>
+        <template v-slot:action="slotProps">
+          <Button class="action-button" :background="SVGButtonBlue" @click="refund(slotProps.detailData.id)">同意</Button>
+        </template>
       </ContentDetail>
     </div>
   </div>
@@ -45,18 +48,24 @@
   import SearchView from '@/components/SearchView.vue'
   import ContentDetail from '@/components/ContentDetail.vue'
   import VerticalList from '@/components/VerticalList.vue'
+  import Button from '@/components/Button.vue'
+  import SVGButtonBlue from '@/assets/button_blue.svg'
   import TimeUtil from '@/util/timeutil'
   import Sources from '@/sampledata/sources.js'
+  import WebUtil from '@/util/webutil'
+  import axios from 'axios'
 
   export default {
     name: 'EquipList',
     components: {
       SearchView,
       ContentDetail,
-      VerticalList
+      VerticalList,
+      Button
     },
     data() {
       return {
+        SVGButtonBlue,
         listIndex: 0,
         listData: []
       }
@@ -66,19 +75,55 @@
       itemClick(index) {
         this.listIndex = index
       },
-      withDefault(value, defaultValue) {
-        return value ? value : defaultValue
+      agree(id, type) {
+        axios.get(WebUtil.getUrl(type === 0 ? 'dealwithequipment' : 'deleteequipment'), {
+          params: {equipmentId: id},
+          headers: {'Authorization': 'Basic ' + WebUtil.auth}
+        }).then(function (res) {
+          // vm.listData.forEach((item, index) => {
+          //   if (item.id === id)
+          //     vm.listData.remove(index)
+          // })
+          window.alert(`${type === 0 ? '装备退回' : '装备申请'}[${id}]处理成功`)
+        }).catch(function (err) {
+          window.alert(`${type === 0 ? '装备退回' : '装备申请'}[${id}]处理失败: ${err}`)
+        })
+      },
+      getData() {
+        let vm = this
+        axios.get(WebUtil.getUrl('getequipmentapply'), {
+          headers: {'Authorization': 'Basic ' + WebUtil.auth},
+          responseType: 'json',
+          transformResponse: [
+            function (data) {
+              let list = []
+              data.iEquipmentList.forEach((item, index) => {
+                list[index] = {
+                  id: item.iId,
+                  type: item.iIsEquipment,
+                  applyTime: new Date(item.iDate),
+                  user: item.iCourierName,
+                  returnReason: item.iReason
+                }
+              })
+              return list
+            }
+          ]
+        }).then(function (res) {
+          vm.listData = res.data
+        }).catch(function (err) {
+          console.log('get refund error,', err)
+        })
       }
     },
     computed: {
       title() {
         let item = this.listData[this.listIndex]
-        return item.type == 0 ? "装备退回" : "装备申请"
+        return item.type === 0 ? "装备退回" : "装备申请"
       }
     },
     mounted() {
-      // TODO: get equip list
-      this.listData = Sources.equipList
+      this.getData()
     }
   }
 </script>

@@ -10,30 +10,17 @@
       </div>
     </div>
     <div class="action-layout">
-      <Button class="action-button" :background="SVGButtonRed">驳回</Button>
-      <Button class="action-button" :background="SVGButtonBlue">同意</Button>
+      <slot name="action" :detailData="detailData"></slot>
     </div>
   </div>
 </template>
 
 <script>
 
-  import SVGButtonRed from '@/assets/button_red.svg'
-  import SVGButtonBlue from '@/assets/button_blue.svg'
-  import Button from '@/components/Button.vue'
   import TimeUtil from "@/util/timeutil";
 
   export default {
     name: 'ContentDetail',
-    components: {
-      Button
-    },
-    data() {
-      return {
-        SVGButtonBlue,
-        SVGButtonRed
-      }
-    },
     props: {
       title: String,
       detailData: Object

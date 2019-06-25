@@ -33,4 +33,7 @@ module.exports = {
       },
     });
   },
+  devServer: {
+    proxy: 'http://182.92.21.103'
+  }
 }

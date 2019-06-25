@@ -1,5 +1,5 @@
 <template>
-  <div class="button">
+  <div class="button" @click="$emit('click')">
     <component :is="background" class="button--background"/>
     <div class="button--text">
       <slot>Button</slot>
@@ -31,11 +31,15 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    background: transparent;
     left: 0;
     top: 0;
     margin: auto;
     &:hover {
-      background: #b9b9b9;
+      transform: scale(1.05)
+    }
+    &:active {
+      transform: scale(0.95);
     }
   }
 

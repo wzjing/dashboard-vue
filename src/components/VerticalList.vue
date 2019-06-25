@@ -4,17 +4,19 @@
          :key="index"
          v-bind:class="currentIndex === index ? 'event-item event-item--selected' : 'event-item'"
          @click="itemClick(index)">
-      <div class="event-item--dot"></div>
+      <div class="event-item--main">
+        <div class="event-item--title">
+          <slot name="title" :data="item">{{index}}</slot>
+        </div>
+        <div class="event-item--content">
+          <slot :data="item"></slot>
+        </div>
+        <div class="event-item--user">来自：{{item.user}}</div>
+      </div>
+
       <div class="event-item--time">
         {{formatDate(item.applyTime)}}
       </div>
-      <div class="event-item--title">
-        <slot name="title" :data="item">{{index}}</slot>
-      </div>
-      <div class="event-item--content">
-        <slot :data="item"> </slot>
-      </div>
-      <div class="event-item--user">来自：{{item.user}}</div>
     </div>
   </div>
 </template>
@@ -86,12 +88,20 @@
   }
 
   .event-item--time {
-    float: right;
+    position: absolute;
+    right: 24px;
+    top: 16px;
     font-size: 12px;
-    margin-top: 0;
     opacity: 0.7;
     transform-origin: right;
     transform: scale(0.9);
+  }
+
+  .event-item--main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .event-item--dot {
@@ -104,6 +114,7 @@
   }
 
   .event-item--title {
+    flex: 0 0 auto;
     display: inline-block;
     font-weight: 700;
     font-size: 12px;
@@ -111,21 +122,29 @@
   }
 
   .event-item--content {
+    flex: 0 0 auto;
+    margin: 8px 0 0;
     font-weight: normal;
     font-size: 12px;
     text-align: left;
-    margin: 8px 0 0 14px;
+    line-height: 14px;
+    max-height: 28px;
     opacity: 0.7;
     transform: scale(0.9);
     transform-origin: left;
+    overflow-x: hidden;
   }
 
   .event-item--user {
+    align-self: flex-end;
     font-weight: normal;
     font-size: 12px;
-    text-align: right;
-    margin: 4px 0 0 0;
+    margin: 4px 0 0;
     transform: scale(0.9);
     transform-origin: right;
+    white-space: nowrap;
+    max-width: 120px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
   }
 </style>

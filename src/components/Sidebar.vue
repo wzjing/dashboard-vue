@@ -11,9 +11,6 @@
       <component class="sidebar-menu--icon" v-bind:is="menu.icon"></component>
     </router-link>
     <div class="sidebar-spacing2"></div>
-    <div class="sidebar-button-avatar">
-      <SVGAvatar class="sidebar-menu--icon"/>
-    </div>
     <router-link class="sidebar-button-setting" to="/setting" @click.native="typeIndex = -1">
       <SVGSetting class="sidebar-menu--icon"/>
     </router-link>
@@ -114,15 +111,6 @@
 
   .sidebar-spacing2 {
     flex: 3 1 auto;
-  }
-
-  .sidebar-button-avatar {
-    flex: 0 0 $menu_size;
-    width: 100%;
-    margin-bottom: 20px;
-    justify-content: flex-end;
-    cursor: pointer;
-    user-select: none;
   }
 
   .sidebar-button-setting {

@@ -25,6 +25,10 @@
           </div>
           <div class="content-text">申请时间：{{formatDate(slotProps.detailData.applyTime)}}</div>
         </template>
+        <template v-slot:action="slotProps">
+          <Button class="action-button" :background="SVGButtonRed" @click="reject(slotProps.detailData.id)">驳回</Button>
+          <Button class="action-button" :background="SVGButtonBlue" @click="agree(slotProps.detailData.id)">同意</Button>
+        </template>
       </ContentDetail>
     </div>
   </div>
@@ -34,31 +38,94 @@
   import SearchView from '@/components/SearchView.vue'
   import ContentDetail from '@/components/ContentDetail.vue'
   import VerticalList from '@/components/VerticalList.vue'
-  import Sources from '@/sampledata/sources.js'
+  import Button from '@/components/Button.vue'
+  import SVGButtonBlue from '@/assets/button_blue.svg'
+  import SVGButtonRed from '@/assets/button_red.svg'
   import TimeUtil from '@/util/timeutil'
+  import WebUtil from '@/util/webutil'
+  import axios from 'axios'
 
   export default {
     name: 'CancelList',
     components: {
       SearchView,
       ContentDetail,
-      VerticalList
+      VerticalList,
+      Button
+    },
+    data() {
+      return {
+        SVGButtonBlue,
+        SVGButtonRed,
+        listIndex: 0,
+        listData: []
+      }
     },
     methods: {
       formatDate: TimeUtil.formatDate,
       itemClick(index) {
         this.listIndex = index
-      }
-    },
-    data() {
-      return {
-        listIndex: 0,
-        listData: []
+      },
+      reject(id) {
+        axios.get(WebUtil.getUrl('refusecancelbeforepickup'), {
+          params: {deliveryId: id},
+          headers: {'Authorization': 'Basic ' + WebUtil.auth}
+        }).then(function (res) {
+          // vm.listData.forEach((item, index) => {
+          //   if (item.id === id)
+          //     vm.listData.remove(index)
+          // })
+          window.alert(`订单[${id}]取消已被驳回`)
+        }).catch(function (err) {
+          window.alert(`订单[${id}]取消驳回失败: ${err}`)
+        })
+      },
+      agree(id) {
+        axios.get(WebUtil.getUrl('agreecancelbeforepickup'), {
+          params: {deliveryId: id},
+          headers: {'Authorization': 'Basic ' + WebUtil.auth}
+        }).then(function (res) {
+          // vm.listData.forEach((item, index) => {
+          //   if (item.id === id)
+          //     vm.listData.remove(index)
+          // })
+          window.alert(`订单[${id}]取消成功`)
+        }).catch(function (err) {
+          window.alert(`订单[${id}]取消失败: ${err}`)
+        })
+      },
+      getData() {
+        let vm = this
+        axios.get(WebUtil.getUrl('getcancelbeforepickup'), {
+          headers: {'Authorization': 'Basic ' + WebUtil.auth},
+          params: {lastId: 0},
+          responseType: 'json',
+          transformResponse: [
+            function (data) {
+              let list = []
+              data.iList.forEach((item, index) => {
+                list[index] = {
+                  id: item.iDeliveryId,
+                  code: item.iOrderCode,
+                  applyTime: new Date(item.iCancelTime),
+                  user: item.iUserName,
+                  reason: item.iCancelReason,
+                  amount: item.iFee,
+                }
+              })
+              return list
+            }
+          ]
+        }).then(function (res) {
+          console.log(res.data)
+          vm.listData = res.data
+        }).catch(function (err) {
+          console.log('get refund error,', err)
+        })
       }
     },
     mounted() {
-      // TODO: get cancel list
-      this.listData = Sources.cancelList
+      this.getData()
     }
   }
 </script>

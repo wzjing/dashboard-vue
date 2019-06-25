@@ -1,6 +1,6 @@
 <template>
   <div class="search-view">
-    <textarea class="search-view--text" placeholder="Exp: id=10,user='Jerry'"></textarea>
+    <textarea class="search-view--text" placeholder="Exp: id: 10, user: 'Jerry'"></textarea>
     <SVGSearch class="search-view--search"/>
   </div>
 </template>
@@ -47,11 +47,8 @@ export default {
 }
 
 textarea::-webkit-input-placeholder {
-  color: #2f69ff !important;
-  opacity: 0.4;
-  &:focus {
-    color: #000 !important;
-  }
+  color: #000 !important;
+  opacity: 0.3;
 }
 
 .search-view--search {

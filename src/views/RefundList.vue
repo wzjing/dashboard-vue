@@ -5,8 +5,9 @@
       <VerticalList class="list-view" :listData="listData" @item-click="itemClick($event)">
         <template v-slot:title="slotProps">退款订单</template>
         <template
-          v-slot:default="slotProps"
-        >{{slotProps.data.reason == null ? "无" : slotProps.data.reason}}</template>
+                v-slot:default="slotProps"
+        >{{slotProps.data.reason == null ? "无" : slotProps.data.reason}}
+        </template>
       </VerticalList>
     </div>
     <div class="detail-layout" v-if="listData[listIndex]">
@@ -44,9 +45,12 @@
               状态：
               <span style="color:#ff0000">退款失败</span>
             </div>
-            <div class="content-text">失败原因：{{withDefault(slotProps.detailData.failReason, "未知")}}</div>
+            <div class="content-text">失败原因：{{slotProps.detailData.failReason || "未知"}}</div>
             <div class="content-text">处理时间：{{formatDate(slotProps.detailData.dealTime)}}</div>
           </div>
+        </template>
+        <template v-slot:action="slotProps">
+          <Button class="action-button" :background="SVGButtonBlue" @click="refund(slotProps.detailData.id)">退款</Button>
         </template>
       </ContentDetail>
     </div>
@@ -54,90 +58,138 @@
 </template>
 
 <script>
-import SearchView from "@/components/SearchView.vue";
-import ContentDetail from "@/components/ContentDetail.vue";
-import VerticalList from "@/components/VerticalList.vue";
-import TimeUtil from "@/util/timeutil";
-import Sources from "@/sampledata/sources.js";
+  import SearchView from '@/components/SearchView.vue'
+  import ContentDetail from '@/components/ContentDetail.vue'
+  import VerticalList from '@/components/VerticalList.vue'
+  import Button from '@/components/Button.vue'
+  import SVGButtonBlue from '@/assets/button_blue.svg'
+  import TimeUtil from '@/util/timeutil'
+  import WebUtil from '@/util/webutil'
+  import axios from 'axios'
 
-export default {
-  name: "RefundList",
-  components: {
-    SearchView,
-    ContentDetail,
-    VerticalList
-  },
-  data() {
-    return {
-      listIndex: 0,
-      listData: []
-    };
-  },
-  methods: {
-    formatDate: TimeUtil.formatDate,
-    itemClick(index) {
-      this.listIndex = index;
+  export default {
+    name: "RefundList",
+    components: {
+      SearchView,
+      ContentDetail,
+      VerticalList,
+      Button
     },
-    withDefault(value, defaultValue) {
-      return value ? value : defaultValue
+    data() {
+      return {
+        SVGButtonBlue,
+        listIndex: 0,
+        listData: []
+      };
+    },
+    methods: {
+      formatDate: TimeUtil.formatDate,
+      itemClick(index) {
+        this.listIndex = index;
+      },
+      refund(id) {
+        console.log('refund call', id)
+        let vm = this
+        axios.get(WebUtil.getUrl('executerefund'), {
+          params: {tranId: id},
+          headers: {'Authorization': 'Basic ' + WebUtil.auth}
+        }).then(function (res) {
+          // vm.listData.forEach((item, index) => {
+          //   if (item.id === id)
+          //     vm.listData.remove(index)
+          // })
+          window.alert(`订单[${id}]退款处理成功`)
+        }).catch(function (err) {
+          window.alert(`订单[${id}]退款处理失败: ${err}`)
+        })
+      },
+      getData() {
+        let vm = this
+        axios.get(WebUtil.getUrl('getdeliveryrefund'), {
+          headers: {'Authorization': 'Basic ' + WebUtil.auth},
+          responseType: 'json',
+          transformResponse: [
+            function (data) {
+              let list = []
+              data.iRefundList.forEach((item, index) => {
+                list[index] = {
+                  id: item.iTranId,
+                  status: item.iRefundStatus,
+                  code: item.iInternalCode,
+                  applyTime: new Date(item.iRefundTime),
+                  dealTime: new Date(item.iDealTime),
+                  finishTime: new Date(item.iCompletedTime),
+                  user: item.iName,
+                  reason: item.iRefundReason,
+                  failReason: item.iFailReason,
+                  amount: item.iRefundMoney,
+                }
+              })
+              return list
+            }
+          ]
+        }).then(function (res) {
+          vm.listData = res.data
+        }).catch(function (err) {
+          console.log('get refund error,', err)
+        })
+      }
+    },
+    mounted() {
+      this.getData()
     }
-  },
-  mounted() {
-    // TODO: get refund list
-    this.listData = Sources.refundList;
-  }
-};
+  };
 </script>
 
 <style scoped lang="scss">
-$shadow_margin: 20px;
+  $shadow_margin: 20px;
 
-.refund-list {
-  box-sizing: border-box;
-  padding: 28px 12px 12px;
-  display: flex;
-  flex-direction: row;
-}
+  .refund-list {
+    box-sizing: border-box;
+    padding: 28px 12px 12px;
+    display: flex;
+    flex-direction: row;
+  }
 
-.list-layout {
-  flex: 0 0 auto;
-  min-width: 300px;
-  display: flex;
-  flex-direction: column;
-}
+  .list-layout {
+    flex: 0 0 auto;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+  }
 
-.search-view {
-  flex: 0 0 auto;
-  margin: 0 $shadow_margin 0 $shadow_margin;
-}
+  .search-view {
+    flex: 0 0 auto;
+    margin: 0 $shadow_margin 0 $shadow_margin;
+  }
 
-.list-view {
-  position: relative;
-  flex: 1 1 auto;
-  overflow: auto;
-  padding: 10px $shadow_margin;
-  margin-top: 8px;
-}
+  .list-view {
+    position: relative;
+    flex: 1 1 auto;
+    overflow: auto;
+    padding: 10px $shadow_margin;
+    margin-top: 8px;
+  }
 
-.detail-layout {
-  flex: 1 1 auto;
-  margin: 0 24px;
-}
+  .detail-layout {
+    flex: 1 1 auto;
+    margin: 0 24px;
+  }
 
-.content-text {
-  text-align: left;
-  font-size: 14px;
-  margin: 4px 0;
-}
+  .content-text {
+    text-align: left;
+    font-size: 14px;
+    margin: 4px 0;
+  }
 
-.content-amount {
-  font-size: 18px;
-  color: #ff8500;
-  margin: 0 4px;
-}
+  .content-amount {
+    font-size: 18px;
+    color: #ff8500;
+    margin: 0 4px;
+  }
 
-.content-state {
-  font-size: 14px;
-  margin: 32px 0 0 0;
-}
+  .content-state {
+    font-size: 14px;
+    margin: 32px 0 0 0;
+  }
 </style>
