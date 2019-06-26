@@ -1,5 +1,8 @@
 <template>
-  <div>Setting</div>
+  <div class="setting">
+    <div class="setting-title">设置</div>
+    <div>暂无可用设置</div>
+  </div>
 </template>
 
 <script>
@@ -8,6 +11,12 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  .setting {
+    padding: 16px 32px;
+  }
 
+  .setting-title {
+    text-align: left;
+  }
 </style>

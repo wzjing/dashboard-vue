@@ -2,19 +2,19 @@
   <div class="refund-list">
     <div class="list-layout">
       <SearchView class="search-view"/>
-      <VerticalList class="list-view" :listData="listData" @item-click="itemClick($event)">
+      <VerticalList class="list-view" :listData="listData.filter(listFilter)" @item-selected="currentItem = arguments[1]">
         <template v-slot:title="slotProps">退款订单</template>
         <template
                 v-slot:default="slotProps"
-        >{{slotProps.data.reason == null ? "无" : slotProps.data.reason}}
+        >{{slotProps.data.reason || "无"}}
         </template>
       </VerticalList>
     </div>
-    <div class="detail-layout" v-if="listData[listIndex]">
-      <ContentDetail :title="'退款订单'" :detailData="listData[listIndex] ? listData[listIndex] : null">
+    <div class="detail-layout" v-if="currentItem || listData[0]">
+      <ContentDetail :title="'退款订单'" :detailData="currentItem || listData[0]">
         <template v-slot:default="slotProps">
           <div class="content-text">订单号：{{slotProps.detailData.code}}</div>
-          <div class="content-text">退款原因：{{slotProps.detailData.reason}}</div>
+          <div class="content-text">退款原因：{{slotProps.detailData.reason || '无'}}</div>
           <div class="content-text">
             退款金额：
             <span class="content-amount">{{slotProps.detailData.amount}}</span>元
@@ -54,6 +54,8 @@
         </template>
       </ContentDetail>
     </div>
+    <div class="detail-layout" v-else></div>
+
   </div>
 </template>
 
@@ -68,7 +70,7 @@
   import axios from 'axios'
 
   export default {
-    name: "RefundList",
+    name: 'RefundList',
     components: {
       SearchView,
       ContentDetail,
@@ -78,26 +80,26 @@
     data() {
       return {
         SVGButtonBlue,
-        listIndex: 0,
-        listData: []
+        listData: [],
+        listFilter: item => item,
+        currentItem: null
       };
     },
     methods: {
       formatDate: TimeUtil.formatDate,
-      itemClick(index) {
-        this.listIndex = index;
-      },
       refund(id) {
         console.log('refund call', id)
         let vm = this
-        axios.get(WebUtil.getUrl('executerefund'), {
-          params: {tranId: id},
+        console.log('count: ', this.listData.length)
+        axios.get(WebUtil.getUrl(`executerefund|tranId=${id}`), {
           headers: {'Authorization': 'Basic ' + WebUtil.auth}
-        }).then(function (res) {
-          // vm.listData.forEach((item, index) => {
-          //   if (item.id === id)
-          //     vm.listData.remove(index)
-          // })
+        }).then(function () {
+          vm.listData.forEach((item, index) => {
+            if (item.id === id) {
+              console.log('removed: ', index)
+              vm.listData.splice(index, 1)
+            }
+          })
           window.alert(`订单[${id}]退款处理成功`)
         }).catch(function (err) {
           window.alert(`订单[${id}]退款处理失败: ${err}`)
@@ -122,7 +124,7 @@
                   user: item.iName,
                   reason: item.iRefundReason,
                   failReason: item.iFailReason,
-                  amount: item.iRefundMoney,
+                  amount: item.iRefundMoney
                 }
               })
               return list
@@ -138,7 +140,7 @@
     mounted() {
       this.getData()
     }
-  };
+  }
 </script>
 
 <style scoped lang="scss">

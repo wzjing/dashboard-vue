@@ -2,8 +2,9 @@
   <div class="vertical-list">
     <div v-for="(item, index) in listData"
          :key="index"
-         v-bind:class="currentIndex === index ? 'event-item event-item--selected' : 'event-item'"
-         @click="itemClick(index)">
+         class="event-item"
+         v-bind:class="{'event-item event-item--selected': currentIndex === index}"
+         @click="currentIndex = index">
       <div class="event-item--main">
         <div class="event-item--title">
           <slot name="title" :data="item">{{index}}</slot>
@@ -23,6 +24,7 @@
 
 <script>
   import TimeUtil from "@/util/timeutil";
+
   export default {
     name: 'VerticalList',
     props: {
@@ -34,11 +36,16 @@
         currentIndex: 0
       }
     },
-    methods:{
+    methods: {
       formatDate: TimeUtil.formatDate,
-      itemClick(index){
-        this.currentIndex = index
-        this.$emit('item-click', index)
+    },
+    watch: {
+      currentIndex: function (value) {
+        console.log(`watch: currentIndex[${value}]`)
+        this.$emit('item-selected', value, this.listData[value])
+      },
+      listData: function(value) {
+        console.log('listData: ', value)
       }
     }
   }

@@ -6,10 +6,10 @@
 </template>
 
 <script>
-import SVGSearch from "@/assets/ic_search.svg";
+import SVGSearch from '@/assets/ic_search.svg'
 
 export default {
-  name: "SearchView",
+  name: 'SearchView',
   data: () => {
     return {
       currentIndex: 0
@@ -18,7 +18,7 @@ export default {
   components: {
     SVGSearch
   }
-};
+}
 </script>
 
 <style scoped lang="scss">

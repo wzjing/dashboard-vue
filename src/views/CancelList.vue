@@ -5,18 +5,18 @@
       <VerticalList
               class="list-view"
               :listData="listData"
-              @item-click="itemClick($event)">
+              @item-selected="currentItem = arguments[1]">
         <template v-slot:title="slotProps">
           取消订单
         </template>
         <template v-slot:default="slotProps">
-          {{slotProps.data.reason == null ? "无" : slotProps.data.reason}}
+          {{slotProps.data.reason || "无"}}
         </template>
       </VerticalList>
     </div>
-    <div class="detail-layout" v-if="listData[listIndex]">
+    <div class="detail-layout" v-if="currentItem">
       <ContentDetail :title="'取消订单'"
-                     :detailData="listData[listIndex]">
+                     :detailData="currentItem">
         <template v-slot:default="slotProps">
           <div class="content-text">订单号：{{slotProps.detailData.code}}</div>
           <div class="content-text">取消原因：{{slotProps.detailData.reason}}</div>
@@ -31,6 +31,7 @@
         </template>
       </ContentDetail>
     </div>
+    <div class="detail-layout" v-else></div>
   </div>
 </template>
 
@@ -57,38 +58,35 @@
       return {
         SVGButtonBlue,
         SVGButtonRed,
-        listIndex: 0,
-        listData: []
+        listData: [],
+        currentItem: null
       }
     },
     methods: {
       formatDate: TimeUtil.formatDate,
-      itemClick(index) {
-        this.listIndex = index
-      },
       reject(id) {
-        axios.get(WebUtil.getUrl('refusecancelbeforepickup'), {
-          params: {deliveryId: id},
+        let vm = this
+        axios.get(WebUtil.getUrl(`refusecancelbeforepickup|deliveryId=${id}`), {
           headers: {'Authorization': 'Basic ' + WebUtil.auth}
-        }).then(function (res) {
-          // vm.listData.forEach((item, index) => {
-          //   if (item.id === id)
-          //     vm.listData.remove(index)
-          // })
+        }).then(function () {
+          vm.listData.forEach((item, index) => {
+            if (item.id === id)
+              vm.listData.splice(index, 1)
+          })
           window.alert(`订单[${id}]取消已被驳回`)
         }).catch(function (err) {
           window.alert(`订单[${id}]取消驳回失败: ${err}`)
         })
       },
       agree(id) {
-        axios.get(WebUtil.getUrl('agreecancelbeforepickup'), {
-          params: {deliveryId: id},
+        let vm = this
+        axios.get(WebUtil.getUrl(`agreecancelbeforepickup|deliveryId=${id}`), {
           headers: {'Authorization': 'Basic ' + WebUtil.auth}
-        }).then(function (res) {
-          // vm.listData.forEach((item, index) => {
-          //   if (item.id === id)
-          //     vm.listData.remove(index)
-          // })
+        }).then(function () {
+          vm.listData.forEach((item, index) => {
+            if (item.id === id)
+              vm.listData.splice(index, 1)
+          })
           window.alert(`订单[${id}]取消成功`)
         }).catch(function (err) {
           window.alert(`订单[${id}]取消失败: ${err}`)
@@ -117,7 +115,6 @@
             }
           ]
         }).then(function (res) {
-          console.log(res.data)
           vm.listData = res.data
         }).catch(function (err) {
           console.log('get refund error,', err)
