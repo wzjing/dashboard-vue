@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <div class="main-title">Dashboard</div>
-    <div class="main-second-title">订单</div>
+    <div class="main-title">Dashboard<SVGNavi style="width:24px;height:24px;margin-left: 12px;vertical-align: bottom"/></div>
+    <div class="main-second-title">订单<SVGOrder style="width:20px;height:20px;margin-left: 8px;vertical-align: bottom"/></div>
     <div class="main-card-layout">
       <Card class="main-card" :image="SVGRefund" :text="'退款订单'" @click="$router.push({path: '/refund'})"/>
       <Card class="main-card" :image="SVGCancel" :text="'取消订单'" @click="$router.push({path: '/cancel'})"/>
@@ -16,6 +16,8 @@
 
 <script>
   import Card from '@/components/Card.vue'
+  import SVGNavi from '@/assets/ic_navi.svg'
+  import SVGOrder from '@/assets/ic_order.svg'
   import SVGRefund from '@/assets/ic_refund.svg'
   import SVGCancel from '@/assets/ic_cancel.svg'
   import SVGEquip from '@/assets/ic_equip.svg'
@@ -32,7 +34,9 @@
       }
     },
     components: {
-      Card
+      Card,
+      SVGNavi,
+      SVGOrder
     }
   }
 </script>

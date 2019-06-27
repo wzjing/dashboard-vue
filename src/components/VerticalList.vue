@@ -41,11 +41,11 @@
     },
     watch: {
       currentIndex: function (value) {
-        console.log(`watch: currentIndex[${value}]`)
-        this.$emit('item-selected', value, this.listData[value])
+        this.$emit('item-selected', this.listData[value])
       },
-      listData: function(value) {
-        console.log('listData: ', value)
+      listData: function (value) {
+        this.$emit('item-selected', value[0])
+        this.currentIndex = 0
       }
     }
   }

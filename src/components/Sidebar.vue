@@ -1,26 +1,28 @@
 <template>
   <div class="sidebar">
-    <div class="sidebar-button-menu">
-      <SVGMenu class="sidebar-menu--icon" @click="menuClick()"/>
+    <div class="sidebar-logo" @click="$router.push('/')">
+      <SVGMenu class="sidebar-logo--icon"/>
     </div>
-    <div class="sidebar-spacing1"></div>
-    <router-link v-for="(menu, index) in menus"
-                 :key="index"
-                 v-bind:class="$route.path === menu.link? 'sidebar-menu sidebar-menu--selected' : 'sidebar-menu'"
-                 v-bind:to="menu.link">
-      <component class="sidebar-menu--icon" v-bind:is="menu.icon"></component>
-    </router-link>
-    <div class="sidebar-spacing2"></div>
-    <router-link class="sidebar-button-setting" to="/setting" @click.native="typeIndex = -1">
-      <SVGSetting class="sidebar-menu--icon"/>
-    </router-link>
+
+    <div class="sidebar-content">
+      <div class="sidebar-menu-layout">
+        <div v-for="(menu, index) in menus"
+             :key="index"
+             class="sidebar-menu"
+             v-bind:class="{'sidebar-menu--selected' : $route.path === menu.link}">
+          <component class="sidebar-menu--icon" v-bind:is="menu.icon" @click="$router.push(menu.link)"></component>
+        </div>
+      </div>
+      <div class="sidebar-button-setting" @click="$router.push('/setting')">
+        <SVGSetting/>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import SVGMenu from '@/assets/ic_menu.svg'
   import SVGSetting from '@/assets/ic_setting.svg'
-  import SVGEvent from '@/assets/ic_event.svg'
   import SVGVideo from '@/assets/ic_video.svg'
   import SVGAvatar from '@/assets/ic_avatar.svg'
 
@@ -28,11 +30,6 @@
     name: 'Sidebar',
     props: {
       menus: Array
-    },
-    methods: {
-      menuClick() {
-        console.log('menu click')
-      }
     },
     data() {
       return {
@@ -43,7 +40,6 @@
     components: {
       SVGMenu,
       SVGSetting,
-      SVGEvent,
       SVGVideo,
       SVGAvatar
     }
@@ -58,29 +54,59 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: 48px;
     box-sizing: border-box;
-    padding: 6px 0;
-    box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.08);
-    background: #ffffff;
     user-select: none;
   }
 
-  .sidebar-button-menu {
-    flex: 0 0 $menu_size;
+  .sidebar-logo {
+    flex: 0 0 48px;
     width: 100%;
-    justify-content: flex-start;
     cursor: pointer;
+    box-sizing: border-box;
+    box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.08);
+    background: white;
+
+    &:hover {
+      box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.08);
+    }
   }
 
-  .sidebar-spacing1 {
-    flex: 0 1 10px;
+  svg {
+    display: block;
+    margin: auto;
+  }
+
+  .sidebar-logo--icon {
+    width: 48px;
+    height: 48px;
+    box-sizing: border-box;
+  }
+
+  .sidebar-content {
+    flex: 1 1 auto;
+    width: 100%;
+    margin-top: 1px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.08);
+    background: white;
+  }
+
+  .sidebar-menu-layout {
+    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
+    margin-top: 32px;
+    flex-direction: column;
   }
 
   .sidebar-menu {
     flex: 0 0 auto;
     width: 100%;
+    padding: 4px 0;
     position: relative;
     cursor: pointer;
     filter: grayscale(100%);
@@ -109,14 +135,10 @@
     background: transparent;
   }
 
-  .sidebar-spacing2 {
-    flex: 3 1 auto;
-  }
-
   .sidebar-button-setting {
-    flex: 0 0 $menu_size;
+    flex: 0 0 auto;
     width: 100%;
-    justify-content: flex-end;
+    margin-bottom: 24px;
     position: relative;
     cursor: pointer;
     user-select: none;

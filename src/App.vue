@@ -8,8 +8,7 @@
 </template>
 
 <script>
-  import Sidebar from "@/components/Sidebar";
-  import SVGMain from '@/assets/ic_main.svg'
+  import Sidebar from '@/components/Sidebar'
   import SVGRefund from '@/assets/ic_refund.svg'
   import SVGCancel from '@/assets/ic_cancel.svg'
   import SVGEquip from '@/assets/ic_equip.svg'
@@ -20,11 +19,6 @@
     data: () => {
       return {
         menus: [
-          {
-            name: 'main',
-            icon: SVGMain,
-            link: '/'
-          },
           {
             name: 'refund',
             icon: SVGRefund,

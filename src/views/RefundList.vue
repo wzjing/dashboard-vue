@@ -1,17 +1,16 @@
 <template>
   <div class="refund-list">
     <div class="list-layout">
-      <SearchView class="search-view"/>
-      <VerticalList class="list-view" :listData="listData.filter(listFilter)" @item-selected="currentItem = arguments[1]">
+      <SearchView class="search-view" @keyword-change="keyword = $event"/>
+      <VerticalList class="list-view" :listData="filteredList"
+                    @item-selected="currentItem = $event">
         <template v-slot:title="slotProps">退款订单</template>
-        <template
-                v-slot:default="slotProps"
-        >{{slotProps.data.reason || "无"}}
+        <template v-slot:default="slotProps">{{slotProps.data.reason || "无"}}
         </template>
       </VerticalList>
     </div>
-    <div class="detail-layout" v-if="currentItem || listData[0]">
-      <ContentDetail :title="'退款订单'" :detailData="currentItem || listData[0]">
+    <div class="detail-layout" v-if="currentItem">
+      <ContentDetail :title="'退款订单'" :detailData="currentItem">
         <template v-slot:default="slotProps">
           <div class="content-text">订单号：{{slotProps.detailData.code}}</div>
           <div class="content-text">退款原因：{{slotProps.detailData.reason || '无'}}</div>
@@ -81,9 +80,21 @@
       return {
         SVGButtonBlue,
         listData: [],
-        listFilter: item => item,
+        keyword: null,
         currentItem: null
       };
+    },
+    computed: {
+      filteredList: function () {
+        let vm = this
+        if (vm.keyword) {
+          return vm.listData.filter(item => {
+            return new RegExp(vm.keyword).test(`${item.id}\n${item.user}\n${item.code}`)
+          })
+        } else {
+          return vm.listData
+        }
+      }
     },
     methods: {
       formatDate: TimeUtil.formatDate,
@@ -93,16 +104,20 @@
         console.log('count: ', this.listData.length)
         axios.get(WebUtil.getUrl(`executerefund|tranId=${id}`), {
           headers: {'Authorization': 'Basic ' + WebUtil.auth}
-        }).then(function () {
-          vm.listData.forEach((item, index) => {
-            if (item.id === id) {
-              console.log('removed: ', index)
-              vm.listData.splice(index, 1)
-            }
-          })
-          window.alert(`订单[${id}]退款处理成功`)
+        }).then(function (res) {
+          if (res.data.iStatus === 0) {
+            vm.listData.forEach((item, index) => {
+              if (item.id === id) {
+                console.log('removed: ', index)
+                vm.listData.splice(index, 1)
+              }
+            })
+            window.alert(`退款订单[${id}]处理成功`)
+          } else {
+            window.alert(`退款订单[${id}]处理失败: ` + (res.data.iMsg || `(${res.data.iStatus})未知错误`))
+          }
         }).catch(function (err) {
-          window.alert(`订单[${id}]退款处理失败: ${err}`)
+          window.alert(`退款订单[${id}]处理失败: ${err}`)
         })
       },
       getData() {

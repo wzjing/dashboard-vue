@@ -1,17 +1,13 @@
 <template>
   <div class="cancel-list">
     <div class="list-layout">
-      <SearchView class="search-view"/>
+      <SearchView class="search-view" @keyword-change="keyword = $event"/>
       <VerticalList
               class="list-view"
-              :listData="listData"
-              @item-selected="currentItem = arguments[1]">
-        <template v-slot:title="slotProps">
-          取消订单
-        </template>
-        <template v-slot:default="slotProps">
-          {{slotProps.data.reason || "无"}}
-        </template>
+              :listData="filteredList"
+              @item-selected="currentItem = $event">
+        <template v-slot:title="slotProps">取消订单</template>
+        <template v-slot:default="slotProps">{{slotProps.data.reason || "无"}}</template>
       </VerticalList>
     </div>
     <div class="detail-layout" v-if="currentItem">
@@ -59,7 +55,20 @@
         SVGButtonBlue,
         SVGButtonRed,
         listData: [],
-        currentItem: null
+        currentItem: null,
+        keyword: null
+      }
+    },
+    computed: {
+      filteredList: function () {
+        let vm = this
+        if (vm.keyword) {
+          return vm.listData.filter(item => {
+            return new RegExp(vm.keyword).test(`${item.id}\n${item.user}\n${item.code}`)
+          })
+        } else {
+          return vm.listData
+        }
       }
     },
     methods: {
@@ -68,26 +77,34 @@
         let vm = this
         axios.get(WebUtil.getUrl(`refusecancelbeforepickup|deliveryId=${id}`), {
           headers: {'Authorization': 'Basic ' + WebUtil.auth}
-        }).then(function () {
-          vm.listData.forEach((item, index) => {
-            if (item.id === id)
-              vm.listData.splice(index, 1)
-          })
-          window.alert(`订单[${id}]取消已被驳回`)
+        }).then(function (res) {
+          if (res.data.iStatus === 0) {
+            vm.listData.forEach((item, index) => {
+              if (item.id === id)
+                vm.listData.splice(index, 1)
+            })
+            window.alert(`取消订单[${id}]驳回成功`)
+          } else {
+            window.alert(`取消订单[${id}]驳回失败: ` + (res.data.iMsg || `(${res.data.iStatus})未知错误`))
+          }
         }).catch(function (err) {
-          window.alert(`订单[${id}]取消驳回失败: ${err}`)
+          window.alert(`取消订单[${id}]驳回失败: ${err}`)
         })
       },
       agree(id) {
         let vm = this
         axios.get(WebUtil.getUrl(`agreecancelbeforepickup|deliveryId=${id}`), {
           headers: {'Authorization': 'Basic ' + WebUtil.auth}
-        }).then(function () {
-          vm.listData.forEach((item, index) => {
-            if (item.id === id)
-              vm.listData.splice(index, 1)
-          })
-          window.alert(`订单[${id}]取消成功`)
+        }).then(function (res) {
+          if (res.data.iStatus === 0) {
+            vm.listData.forEach((item, index) => {
+              if (item.id === id)
+                vm.listData.splice(index, 1)
+            })
+            window.alert(`订单[${id}]取消成功`)
+          } else {
+            window.alert(`订单[${id}]取消失败: ` + (res.data.iMsg || `(${res.data.iStatus})未知错误`))
+          }
         }).catch(function (err) {
           window.alert(`订单[${id}]取消失败: ${err}`)
         })
