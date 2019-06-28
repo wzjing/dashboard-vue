@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <div class="sidebar-logo" @click="$router.push('/')">
-      <SVGMenu class="sidebar-logo--icon"/>
+      <SVGHome/>
     </div>
 
     <div class="sidebar-content">
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import SVGMenu from '@/assets/ic_menu.svg'
+  import SVGHome from '@/assets/ic_home.svg'
   import SVGSetting from '@/assets/ic_setting.svg'
   import SVGVideo from '@/assets/ic_video.svg'
   import SVGAvatar from '@/assets/ic_avatar.svg'
@@ -38,7 +38,7 @@
       }
     },
     components: {
-      SVGMenu,
+      SVGHome,
       SVGSetting,
       SVGVideo,
       SVGAvatar
@@ -61,6 +61,9 @@
 
   .sidebar-logo {
     flex: 0 0 48px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     cursor: pointer;
     box-sizing: border-box;
@@ -75,12 +78,6 @@
   svg {
     display: block;
     margin: auto;
-  }
-
-  .sidebar-logo--icon {
-    width: 48px;
-    height: 48px;
-    box-sizing: border-box;
   }
 
   .sidebar-content {

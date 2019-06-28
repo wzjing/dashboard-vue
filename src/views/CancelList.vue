@@ -5,7 +5,10 @@
       <VerticalList
               class="list-view"
               :listData="filteredList"
-              @item-selected="currentItem = $event">
+              :loadMore="loadMore"
+              :loading="loading"
+              @item-selected="currentItem = $event"
+              @load-more="getData(lastId)">
         <template v-slot:title="slotProps">取消订单</template>
         <template v-slot:default="slotProps">{{slotProps.data.reason || "无"}}</template>
       </VerticalList>
@@ -55,8 +58,11 @@
         SVGButtonBlue,
         SVGButtonRed,
         listData: [],
+        lastId: 0,
         currentItem: null,
-        keyword: null
+        keyword: null,
+        loadMore: false,
+        loading: false
       }
     },
     computed: {
@@ -76,7 +82,7 @@
       reject(id) {
         let vm = this
         axios.get(WebUtil.getUrl(`refusecancelbeforepickup|deliveryId=${id}`), {
-          headers: {'Authorization': 'Basic ' + WebUtil.auth}
+          headers: WebUtil.globalHeaders
         }).then(function (res) {
           if (res.data.iStatus === 0) {
             vm.listData.forEach((item, index) => {
@@ -94,7 +100,7 @@
       agree(id) {
         let vm = this
         axios.get(WebUtil.getUrl(`agreecancelbeforepickup|deliveryId=${id}`), {
-          headers: {'Authorization': 'Basic ' + WebUtil.auth}
+          headers: WebUtil.globalHeaders
         }).then(function (res) {
           if (res.data.iStatus === 0) {
             vm.listData.forEach((item, index) => {
@@ -109,11 +115,11 @@
           window.alert(`订单[${id}]取消失败: ${err}`)
         })
       },
-      getData() {
+      getData(lastId) {
         let vm = this
-        axios.get(WebUtil.getUrl('getcancelbeforepickup'), {
-          headers: {'Authorization': 'Basic ' + WebUtil.auth},
-          params: {lastId: 0},
+        vm.loading = true
+        axios.get(WebUtil.getUrl(`getcancelbeforepickup|lastId=${lastId}`), {
+          headers: WebUtil.globalHeaders,
           responseType: 'json',
           transformResponse: [
             function (data) {
@@ -128,18 +134,22 @@
                   amount: item.iFee,
                 }
               })
-              return list
+              return {lastId: data.iLastId, count: data.iCount, list: list}
             }
           ]
         }).then(function (res) {
-          vm.listData = res.data
+          vm.listData = vm.listData.concat(res.data.list)
+          vm.loadMore = res.data.count > vm.listData.length
+          vm.lastId |= res.data.lastId
         }).catch(function (err) {
-          console.log('get refund error,', err)
+          window.alert(`get refund error: ${err}`)
+        }).finally(function(){
+          vm.loading = false
         })
       }
     },
     mounted() {
-      this.getData()
+      this.getData(this.lastId)
     }
   }
 </script>
@@ -156,7 +166,6 @@
 
   .list-layout {
     flex: 0 0 auto;
-    min-width: 300px;
     display: flex;
     flex-direction: column;
   }

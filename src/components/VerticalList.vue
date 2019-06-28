@@ -2,34 +2,47 @@
   <div class="vertical-list">
     <div v-for="(item, index) in listData"
          :key="index"
-         class="event-item"
-         v-bind:class="{'event-item event-item--selected': currentIndex === index}"
+         class="vertical-list-item"
+         v-bind:class="{'vertical-list-item vertical-list-item--selected': currentIndex === index}"
          @click="currentIndex = index">
-      <div class="event-item--main">
-        <div class="event-item--title">
+      <div class="vertical-list-item--main">
+        <div class="vertical-list-item--title">
           <slot name="title" :data="item">{{index}}</slot>
+          <span class="vertical-list-item--id">{{item.id}}</span>
         </div>
-        <div class="event-item--content">
+        <div class="vertical-list-item--content">
           <slot :data="item"></slot>
         </div>
-        <div class="event-item--user">来自：{{item.user}}</div>
+        <div class="vertical-list-item--user">来自：{{item.user}}</div>
       </div>
 
-      <div class="event-item--time">
+      <div class="vertical-list-item--time">
         {{formatDate(item.applyTime)}}
       </div>
+    </div>
+    <div v-if="loading" class="vertical-list-loader-more" @click="$emit('load-more')">
+      <SVGProgressbar class="vertical-list-progressbar"/>
+    </div>
+    <div v-else-if="loadMore" class="vertical-list-loader-more" @click="$emit('load-more')">
+      加载更多
     </div>
   </div>
 </template>
 
 <script>
-  import TimeUtil from "@/util/timeutil";
+  import TimeUtil from '@/util/timeutil'
+  import SVGProgressbar from '@/assets/progressbar.svg'
 
   export default {
     name: 'VerticalList',
+    components: {
+      SVGProgressbar
+    },
     props: {
       listData: Array,
-      type: String
+      type: String,
+      loadMore: false,
+      loading: false
     },
     data: () => {
       return {
@@ -56,15 +69,12 @@
   .vertical-list {
     background: transparent;
     overflow-y: visible;
+    min-width: 280px;
   }
-
-  /*::-webkit-scrollbar {*/
-  /*  width: 10px;*/
-  /*}*/
 
   $color-selected: #2f69ff;
 
-  .event-item {
+  .vertical-list-item {
     position: relative;
     height: auto;
     margin-bottom: 1px;
@@ -83,7 +93,7 @@
 
   }
 
-  .event-item--selected {
+  .vertical-list-item--selected {
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     background: $color-selected;
     z-index: 2;
@@ -94,7 +104,14 @@
     }
   }
 
-  .event-item--time {
+  .vertical-list-item--id {
+    font-size: 12px;
+    font-weight: normal;
+    padding: 0 3px;
+    margin-left: 4px;
+  }
+
+  .vertical-list-item--time {
     position: absolute;
     right: 24px;
     top: 16px;
@@ -104,14 +121,14 @@
     transform: scale(0.9);
   }
 
-  .event-item--main {
+  .vertical-list-item--main {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .event-item--dot {
+  .vertical-list-item--dot {
     display: inline-block;
     background: #ff4b43;
     margin: 0 4px;
@@ -120,7 +137,7 @@
     border-radius: 3px;
   }
 
-  .event-item--title {
+  .vertical-list-item--title {
     flex: 0 0 auto;
     display: inline-block;
     font-weight: 700;
@@ -128,7 +145,7 @@
     text-align: left;
   }
 
-  .event-item--content {
+  .vertical-list-item--content {
     flex: 0 0 auto;
     margin: 8px 0 0;
     font-weight: normal;
@@ -142,7 +159,7 @@
     overflow-x: hidden;
   }
 
-  .event-item--user {
+  .vertical-list-item--user {
     align-self: flex-end;
     font-weight: normal;
     font-size: 12px;
@@ -153,5 +170,17 @@
     max-width: 120px;
     overflow-x: hidden;
     text-overflow: ellipsis;
+  }
+
+  .vertical-list-loader-more {
+    position: relative;
+    font-size: 12px;
+    color: black;
+    background: #ffffff;
+    margin: 1px auto;
+    padding: 6px 0;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
   }
 </style>

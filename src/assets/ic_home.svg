@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" version="1.1" viewBox="0 0 32 32">
+    <defs>
+        <style>
+            .cls-2, .cls-3 { fill-rule: evenodd; } .cls-2 { fill: url(#linear-gradient); } .cls-3 { fill: none; stroke: #000; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 1.5; }
+        </style>
+        <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y1="0" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#81d4f7"/>
+            <stop offset="1" stop-color="#03a9f4"/>
+        </linearGradient>
+    </defs>
+    <rect id="BG" width="32" height="32" fill="none"/>
+    <g id="icon" transform="translate(7.04 6)">
+        <path id="path1" d="M141.8,117.778l8.463,7.523v11.284H133.333V125.3Z" class="cls-2" transform="translate(-132.259 -116.584)"/>
+        <path id="path2" d="M126.333,100l9,8v12h-18V108Z" class="cls-3" transform="translate(-117.333 -100)"/>
+        <rect id="rect1" width="7" height="2" fill="#000000" rx="1" transform="translate(5.46 16)"/>
+    </g>
+</svg>

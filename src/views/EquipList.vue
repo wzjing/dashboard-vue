@@ -5,6 +5,7 @@
       <VerticalList
               class="list-view"
               :listData="filteredList"
+              :loading="loading"
               @item-selected="currentItem = $event">
         <template v-slot:title="slotProps">
           <span v-if="slotProps.data.type===0">
@@ -68,7 +69,8 @@
         SVGButtonBlue,
         listData: [],
         currentItem: null,
-        keyword: null
+        keyword: null,
+        loading: false
       }
     },
     computed: {
@@ -91,7 +93,7 @@
       agree(id, type) {
         let vm = this
         axios.get(WebUtil.getUrl(`${type === 0 ? 'dealwithequipment' : 'deleteequipment'}|equipmentId=${id}`), {
-          headers: {'Authorization': 'Basic ' + WebUtil.auth}
+          headers: WebUtil.globalHeaders
         }).then(function (res) {
           if (res.data.iStatus) {
             vm.listData.forEach((item, index) => {
@@ -109,8 +111,9 @@
       },
       getData() {
         let vm = this
+        vm.loading = true
         axios.get(WebUtil.getUrl('getequipmentapply'), {
-          headers: {'Authorization': 'Basic ' + WebUtil.auth},
+          headers: WebUtil.globalHeaders,
           responseType: 'json',
           transformResponse: [
             function (data) {
@@ -129,9 +132,10 @@
           ]
         }).then(function (res) {
           vm.listData = res.data
-          vm.currentItem = vm.listData[0]
         }).catch(function (err) {
-          console.log('get refund error,', err)
+          window.alert(`get refund error: ${err}`)
+        }).finally(function() {
+          vm.loading = false
         })
       }
     },
@@ -153,7 +157,6 @@
 
   .list-layout {
     flex: 0 0 auto;
-    min-width: 300px;
     display: flex;
     flex-direction: column;
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="video-list">
-    视频申请功能正在开发中
+    正在开发中...
   </div>
 </template>
 

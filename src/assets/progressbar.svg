@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="20" version="1.1" viewBox="0 0 200 20">
+    <rect width="200" height="4" x="0" y="8" fill="#2f69ff" fill-opacity="0.2"/>
+    <rect width="16" height="4" x="0" y="8" fill="#2f69ff">
+        <animate attributeName="width" begin="0s" calcMode="linear" dur="2s" repeatCount="indefinite" keyTimes="0;0.5;1" values="64;128;64"/>
+        <animate attributeName="x" begin="0s" dur="1s" from="0" repeatCount="indefinite" to="200"/>
+    </rect>
+</svg>
